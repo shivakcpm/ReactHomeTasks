@@ -1,0 +1,23 @@
+.helloWorld {
+  padding: 10px 0;
+}
+
+.helloWorld:before {
+  padding: 10px;
+}
+
+.helloWorld:nth-child(1):before {
+  content: "1.";
+}
+
+.helloWorld:nth-child(2):before {
+  content: "2.";
+}
+
+.helloWorld:nth-child(3):before {
+  content: "3.";
+}
+
+.helloWorld:nth-child(4):before {
+  content: "4.";
+}
