@@ -1,11 +1,11 @@
-import React, { Component, createElement, PureComponent } from "react";
-import "./Helloworld.css";
+import React, { Component, createElement, PureComponent } from 'react';
+import './Helloworld.css';
 
 /**
  * React functional component
  */
 export function HelloWorld1() {
-  return <div className="helloWorld">Hello World</div>;
+    return <div className="helloWorld">Hello World</div>;
 }
 
 /**
@@ -13,9 +13,9 @@ export function HelloWorld1() {
  */
 
 export class HelloWorld2 extends Component {
-  render() {
-    return <div className="helloWorld">Hello World</div>;
-  }
+    render() {
+        return <div className="helloWorld">Hello World</div>;
+    }
 }
 
 /**
@@ -23,9 +23,9 @@ export class HelloWorld2 extends Component {
  */
 
 export const HelloWorld3 = createElement(
-  "div",
-  { className: "helloWorld" },
-  "Hello World"
+    'div',
+    { className: 'helloWorld' },
+    'Hello World'
 );
 
 /**
@@ -33,7 +33,7 @@ export const HelloWorld3 = createElement(
  */
 
 export class HelloWorld4 extends PureComponent {
-  render() {
-    return <div className="helloWorld">Hello World</div>;
-  }
+    render() {
+        return <div className="helloWorld">Hello World</div>;
+    }
 }

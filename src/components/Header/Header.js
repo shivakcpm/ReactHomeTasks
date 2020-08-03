@@ -1,6 +1,6 @@
-import React from "react";
-import "./Header.css";
+import React from 'react';
+import './Header.css';
 
 export default function Header() {
-  return <h1>React JS Global Mentoring Program</h1>;
+    return <h1>React JS Global Mentoring Program</h1>;
 }
