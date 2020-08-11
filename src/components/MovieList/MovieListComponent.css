@@ -1,0 +1,10 @@
+.movie-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.movies-count{
+    padding: 20px 0px;
+    color: #ececec;
+    font-size: 20px;
+}

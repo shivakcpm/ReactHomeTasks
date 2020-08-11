@@ -1,25 +1,15 @@
-import React from 'react';
-import {
-    HelloWorld1,
-    HelloWorld2,
-    HelloWorld4,
-    HelloWorld3
-} from '../Helloworld/Helloworld';
-import Header from '../Header/Header';
-import InfoComponent from '../Info/InfoComponent';
-import './App.css';
+import React from "react";
+import "./App.css";
+import ContentHeaderComponent from "../ContentHeader/ContentHeaderComponent";
+import { AppHeaderComponent } from "../AppHeader/AppHeaderComponent";
 
 export default function App() {
-    return (
-        <React.StrictMode>
-            <Header />
-            <div className="container">
-                <HelloWorld1 />
-                <HelloWorld2 />
-                {HelloWorld3}
-                <HelloWorld4 />
-                <InfoComponent />
-            </div>
-        </React.StrictMode>
-    );
+  return (
+    <React.StrictMode>
+      <div className="container">
+        <AppHeaderComponent />
+        <ContentHeaderComponent />
+      </div>
+    </React.StrictMode>
+  );
 }
