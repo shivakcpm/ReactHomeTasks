@@ -1,7 +1,11 @@
-import React, { Component } from "react";
-import "./AppHeader.css";
+import React, {  PureComponent } from "react";
+import "./TopComponent.css";
 
-export class AppHeaderComponent extends Component {
+export class TopComponent extends PureComponent {
+  constructor(props){
+    super(props);
+    this.searchBar =React.createRef();
+  }
   render() {
     return (
       <div className="header-wrapper">
@@ -17,8 +21,8 @@ export class AppHeaderComponent extends Component {
 
           <div className="find-movie-wrapper">
             <div className="find-movie">Find your Movie</div>
-            <input className="search-bar" placeholder="what do you want to watch?" />
-            <button className="search-button">Search</button>
+            <input className="search-bar" ref={this.searchBar} placeholder="what do you want to watch?" />
+            <button className="search-button"  onClick={()=>{this.props.onSearch(this.searchBar.current.value)}}>Search</button>
           </div>
         </div>
       </div>

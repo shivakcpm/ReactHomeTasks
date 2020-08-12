@@ -5,11 +5,10 @@
   color: #9f9f9f;
   padding-bottom: 30px;
   padding-right: 30px;
+  padding-bottom: 30px;
   justify-content: space-between;
-  height: 450px;
-  min-width: 250px;
-  width: 23%;
   position: relative;
+  box-sizing: border-box;
 }
 
 img {
@@ -59,4 +58,28 @@ img {
 
 .category {
   font-size: 14px;
+}
+
+
+@media only screen and (max-width: 600px){
+  .movie-card {
+    width: 100%;
+    }
+}
+
+@media only screen and (min-width: 600px){
+  .movie-card {
+    width: 50%;
+    }
+}
+
+@media only screen and (min-width: 768px){
+  .movie-card {
+    width: 33.33%;
+    }
+}
+@media only screen and (min-width: 1200px){
+  .movie-card {
+  width: 25%;
+  }
 }
