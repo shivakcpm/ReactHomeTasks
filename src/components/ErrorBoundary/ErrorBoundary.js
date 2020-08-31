@@ -1,22 +1,27 @@
 import React, { Component } from "react";
+import './ErrorBoundary.css';
 
-export class ErrorBoundaryComponent extends Component {
+export class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, errorMessage: "" };
   }
-
   static getDerivedStateFromError(error) {
     return { hasError: true, errorMessage: error.errorMessage };
   }
 
+  componentDidCatch(error, errorInfo) {
+    const { logErrors = true } = this.props;
 
-
+    if (logErrors) {
+      console.log(error, errorInfo);
+    }
+  }
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <div style={{background:"#232323",height:'400px',color:"#fff",display:'flex',alignItems:'center',justifyContent:'center'}}>
+        <div className="error-boundary">
           <h1>No Movie Found</h1>
         </div>
       );

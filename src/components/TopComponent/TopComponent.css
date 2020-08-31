@@ -1,7 +1,6 @@
 .image-holder{
     background: url(/background.png) no-repeat;
     height: 400px;
-    /* background-size: contain; */
     background-blend-mode: luminosity;
     background-color: #000;
     opacity: 0.7;

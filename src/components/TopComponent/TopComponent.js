@@ -6,6 +6,9 @@ export class TopComponent extends PureComponent {
     super(props);
     this.searchBar =React.createRef();
   }
+  handleClick = ()=>{
+    this.props.onSearch(this.searchBar.current.value)
+  }
   render() {
     return (
       <div className="header-wrapper">
@@ -18,11 +21,10 @@ export class TopComponent extends PureComponent {
             </div>
             <button className="add-movie"> + ADD MOVIE</button>
           </div>
-
           <div className="find-movie-wrapper">
             <div className="find-movie">Find your Movie</div>
             <input className="search-bar" ref={this.searchBar} placeholder="what do you want to watch?" />
-            <button className="search-button"  onClick={()=>{this.props.onSearch(this.searchBar.current.value)}}>Search</button>
+            <button className="search-button"  onClick={this.handleClick}>Search</button>
           </div>
         </div>
       </div>
