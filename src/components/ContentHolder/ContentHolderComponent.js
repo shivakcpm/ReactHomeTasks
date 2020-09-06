@@ -24,7 +24,7 @@ export default function ContentHolderComponent(props) {
                         </select>
                     </div>
                 </div>
-                <ErrorBoundary key={props.movies.length}>
+                <ErrorBoundary >
                     <MovieListComponent movies={props.movies} />
                 </ErrorBoundary>
             </div>
