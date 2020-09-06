@@ -8,7 +8,7 @@ import './ContentHolder.css';
 
 export default function ContentHolderComponent(props) {
     const onTabChange = (index) => {
-        console.log(TABS[tab]);
+        console.log(TABS[index]);
     };
 
     return (
