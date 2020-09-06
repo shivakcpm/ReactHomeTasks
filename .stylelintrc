@@ -1,0 +1,14 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "at-rule-no-unknown": null,
+    "number-leading-zero": never,
+    "unit-allowed-list": ["rem", "px", "s", "%", "deg", "fr"],
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignore": ["custom-elements"]
+      }
+    ]
+  }
+}

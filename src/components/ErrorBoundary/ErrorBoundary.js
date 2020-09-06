@@ -6,6 +6,7 @@ export class ErrorBoundary extends Component {
         super(props);
         this.state = { hasError: false, errorMessage: '' };
     }
+
     static getDerivedStateFromError(error) {
         return { hasError: true, errorMessage: error.errorMessage };
     }
@@ -17,6 +18,7 @@ export class ErrorBoundary extends Component {
             console.log(error, errorInfo);
         }
     }
+
     render() {
         if (this.state.hasError) {
             // You can render any custom fallback UI
