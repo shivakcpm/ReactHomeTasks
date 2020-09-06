@@ -16,7 +16,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jpe?g|png$/,
+                test: /\.jpe?g|png|PNG$/,
                 exclude: /node_modules/,
                 loader: ['url-loader', 'file-loader']
             },

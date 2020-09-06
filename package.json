@@ -53,8 +53,8 @@
     "webpack-dev-server": "webpack-dev-server",
     "dev": "npm run webpack-dev-server -- --env.mode development",
     "prod": "npm run webpack -- --env.mode production",
-    "lint": "eslint /**/*.js",
-    "lint:fix": "eslint --fix /**/*.js"
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint --fix src/**/*.js"
   },
   "eslintConfig": {
     "extends": "react-app"

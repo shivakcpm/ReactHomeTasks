@@ -1,1 +1,1 @@
-export const TABS = ["All", "Documentory", "Comedy", "Horror", "Crime"];
+export const TABS = ['All', 'Documentory', 'Comedy', 'Horror', 'Crime'];
