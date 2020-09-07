@@ -1,5 +1,5 @@
 .image-holder {
-  /* background: url(/background.PNG) no-repeat; */
+  background: url('/public/background.PNG') no-repeat;
   height: 400px;
   background-blend-mode: luminosity;
   background-color: #000;
