@@ -1,0 +1,25 @@
+.input-label {
+  display: block;
+  color: #f65261;
+  font-size: 16px;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+}
+
+.input-field {
+  width: 100%;
+  background: #2e2e2e;
+  height: 30px;
+  color: #fff;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.addmovie-header {
+  color: #fff;
+  font-size: 30px;
+  letter-spacing: 5px;
+  padding: 10px 0;
+  margin: 25px 0;
+  text-transform: uppercase;
+}

@@ -1,5 +1,8 @@
 import React, { createRef,  PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { DialogComponent } from '../DialogComonent/DialogComponent';
+import AddMovieComponent from '../AddMovie/AddMovieComponent';
+
 import './HeaderComponent.css';
 
 export class HeaderComponent extends PureComponent {
@@ -23,6 +26,12 @@ export class HeaderComponent extends PureComponent {
                             <span>roulette</span>
                         </div>
                         <button className="add-movie"> + ADD MOVIE</button>
+                    </div>
+
+                    <div>
+                        <DialogComponent >
+                            <AddMovieComponent></AddMovieComponent>
+                        </DialogComponent>
                     </div>
                     <div className="find-movie-wrapper">
                         <div className="find-movie">Find your Movie</div>
