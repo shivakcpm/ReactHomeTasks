@@ -1,7 +1,8 @@
 import React, { createRef,  PureComponent } from 'react';
-import './TopComponent.css';
+import PropTypes from 'prop-types';
+import './HeaderComponent.css';
 
-export class TopComponent extends PureComponent {
+export class HeaderComponent extends PureComponent {
     constructor(props) {
         super(props);
         this.searchBar = createRef();
@@ -33,3 +34,8 @@ export class TopComponent extends PureComponent {
         );
     }
 }
+
+HeaderComponent.propTypes = {
+    onSearch:PropTypes.func
+};
+

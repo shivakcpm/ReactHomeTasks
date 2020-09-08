@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import ContentHolderComponent from '../ContentHolder/ContentHolderComponent';
-import { TopComponent } from '../TopComponent/TopComponent';
-import movieList from '../../Movies.json';
+import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
+import movieList from '../../__const__/movies.json';
 
 export default function App() {
     const [movies, setMovies] = useState(movieList);
 
     const onSearch = (query) => {
-        const filteredMovies = query.trim()
+        const trimmedQuery = query.trim();
+        const filteredMovies = trimmedQuery
             ? movieList.filter((item) =>
-                new RegExp(query.trim(), 'i').test(item.title)
+                new RegExp(trimmedQuery, 'i').test(item.title)
             )
             : movieList;
         setMovies(filteredMovies);
@@ -18,7 +19,7 @@ export default function App() {
     return (
         <React.StrictMode>
             <div className="container">
-                <TopComponent onSearch={onSearch} />
+                <HeaderComponent onSearch={onSearch} />
                 <ContentHolderComponent movies={movies} />
             </div>
         </React.StrictMode>

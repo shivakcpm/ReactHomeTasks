@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import MovieCardComponent from '../MovieCard/MovieCardComponent';
+import PropTypes from 'prop-types';
 import './MovieListComponent.css';
-export default class MovieListComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
 
+export default class MovieListComponent extends Component {
     render() {
         const { movies } = this.props;
         if (movies.length === 0) {
@@ -24,3 +22,7 @@ export default class MovieListComponent extends Component {
         );
     }
 }
+
+MovieListComponent.propTypes = {
+    movies: PropTypes.array
+};

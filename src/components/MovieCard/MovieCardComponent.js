@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './MovieCard.css';
+
 export default class MovieCardComponent extends PureComponent {
     render() {
         const {

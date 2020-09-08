@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import './TabComponent.css';
 
 export default class TabComponent extends PureComponent {
@@ -21,9 +22,9 @@ export default class TabComponent extends PureComponent {
                             key={index}
                             onClick={() => this.onTabChange(index)}
                             className={
-                                `tab ${  index === this.state.activeTab
-                                    ? 'active'
-                                    : ''}`
+                                `${  index === this.state.activeTab
+                                    ? 'tab active'
+                                    : 'tab'}`
                             }
                         >
                             {value}
@@ -34,3 +35,8 @@ export default class TabComponent extends PureComponent {
         );
     }
 }
+
+TabComponent.propTypes = {
+    tabs:PropTypes.array,
+    tabChanged:PropTypes.func
+};

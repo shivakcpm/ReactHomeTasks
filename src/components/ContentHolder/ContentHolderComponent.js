@@ -3,6 +3,7 @@ import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { TABS } from '../../constants';
+import PropTypes from 'prop-types';
 
 import './ContentHolder.css';
 
@@ -35,3 +36,7 @@ export default function ContentHolderComponent(props) {
         </>
     );
 }
+
+ContentHolderComponent.propTypes = {
+    movies:PropTypes.array.isRequired
+};
