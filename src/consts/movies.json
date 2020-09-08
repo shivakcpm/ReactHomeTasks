@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Pulp Fiction",
+      "src": "/public/pulp-fiction.PNG",
+      "year": "2004",
+      "category": "Action & Adventure",
+      "id":0
+    },
+    {
+      "title": "Inception",
+      "src": "/public/inception.png",
+      "year": "1994",
+      "category": "Action & Adventure",
+      "id":1
+    },
+    {
+      "title": "Bohemian Rhapsody",
+      "src": "/public/bohemian.PNG",
+      "year": "2004",
+      "category": "Drama, Biography, Music",
+      "id":2
+    },
+    {
+      "title": "Kill the bill",
+      "src": "/public/killthebill.PNG",
+      "year": "1994",
+      "category": "Oscar Winning Movie",
+      "id":3
+    },
+    {
+      "title": "Bohemian Rhapsody",
+      "src": "/public/bohemian.PNG",
+      "year": "2004",
+      "category": "Drama, Biography, Music",
+      "id":4
+    },
+    {
+      "title": "Inception",
+      "src": "/public/inception.png",
+      "year": "2003",
+      "category": "Action & Adventure",
+      "id":5
+    },
+    {
+      "title": "Pulp Fiction",
+      "src": "/public/pulp-fiction.PNG",
+      "year": "2004",
+      "category": "Action & Adventure",
+      "id":6
+    },
+    {
+      "title": "Bohemian Rhapsody",
+      "src": "/public/bohemian.PNG",
+      "year": "2004",
+      "category": "Drama, Biography, Music",
+      "id":7
+    }
+  ]

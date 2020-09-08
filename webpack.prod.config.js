@@ -16,9 +16,18 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jpe?g|png$/,
+                test: /\.jpe?g|png|PNG$/,
                 exclude: /node_modules/,
-                loader: ['url-loader', 'file-loader']
+                use:[{
+                    loader: 'file-loader',
+                    options: {
+                        emitFile: false,
+                        name: '[path][name].[ext]'
+                    }
+                }
+
+                ]
+
             },
             {
                 test: /\.css$/,
@@ -34,11 +43,11 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            PUBLIC_URL:''
+            PUBLIC_URL:'public'
         }),
         new CopyPlugin({
             patterns: [
-                { from: 'public', to: '' }
+                { from: 'public', to: 'public' }
             ]
         }),
         new MiniCssExtractPlugin({

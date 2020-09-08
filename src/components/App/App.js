@@ -1,24 +1,26 @@
-import React from 'react';
-import {
-    HelloWorld1,
-    HelloWorld2,
-    HelloWorld4,
-    HelloWorld3
-} from '../Helloworld/Helloworld';
-import Header from '../Header/Header';
-import InfoComponent from '../Info/InfoComponent';
-import './App.css';
+import React, { useState } from 'react';
+import ContentHolderComponent from '../ContentHolder/ContentHolderComponent';
+import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
+import movieList from '../../consts/movies.json';
 
 export default function App() {
+    const [movies, setMovies] = useState(movieList);
+
+    const onSearch = (query) => {
+        const trimmedQuery = query.trim();
+        const filteredMovies = trimmedQuery
+            ? movieList.filter((item) =>
+                new RegExp(trimmedQuery, 'i').test(item.title)
+            )
+            : movieList;
+        setMovies(filteredMovies);
+    };
+
     return (
         <React.StrictMode>
-            <Header />
             <div className="container">
-                <HelloWorld1 />
-                <HelloWorld2 />
-                {HelloWorld3}
-                <HelloWorld4 />
-                <InfoComponent />
+                <HeaderComponent onSearch={onSearch} />
+                <ContentHolderComponent movies={movies} />
             </div>
         </React.StrictMode>
     );

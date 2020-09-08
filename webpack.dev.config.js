@@ -14,9 +14,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jpe?g|png$/,
+                test: /\.jpe?g|png|PNG$/,
                 exclude: /node_modules/,
-                loader: ['url-loader', 'file-loader']
+                loader: ['file-loader']
             },
             {
                 test: /\.css$/,
@@ -42,6 +42,7 @@ module.exports = {
     ],
     devServer: {
         open: true,
-        hot: true
+        hot: true,
+        contentBase:path.resolve(__dirname, 'public')
     }
 };
