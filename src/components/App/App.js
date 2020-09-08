@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ContentHolderComponent from '../ContentHolder/ContentHolderComponent';
 import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
-import movieList from '../../__const__/movies.json';
+import movieList from '../../consts/movies.json';
 
 export default function App() {
     const [movies, setMovies] = useState(movieList);

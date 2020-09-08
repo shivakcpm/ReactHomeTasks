@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import './TabComponent.css';
 
 export default class TabComponent extends PureComponent {
@@ -21,11 +22,9 @@ export default class TabComponent extends PureComponent {
                         <div
                             key={index}
                             onClick={() => this.onTabChange(index)}
-                            className={
-                                `${  index === this.state.activeTab
-                                    ? 'tab active'
-                                    : 'tab'}`
-                            }
+                            className={classnames('tab', {
+                                'active': index === this.state.activeTab
+                            })}
                         >
                             {value}
                         </div>
