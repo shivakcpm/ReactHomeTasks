@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { TABS } from '../../constants';
-import PropTypes from 'prop-types';
-
+import { myContext } from '../../contextProvider';
 import './ContentHolder.css';
 
 export default function ContentHolderComponent(props) {
@@ -12,6 +11,7 @@ export default function ContentHolderComponent(props) {
         console.log(TABS[index]);
     };
 
+    const movies = useContext(myContext).movies;
     return (
         <>
             <div className="content-wrapper">
@@ -25,8 +25,8 @@ export default function ContentHolderComponent(props) {
                         </select>
                     </div>
                 </div>
-                <ErrorBoundary >
-                    <MovieListComponent movies={props.movies} />
+                <ErrorBoundary key={movies.length}>
+                    <MovieListComponent movies={movies} />
                 </ErrorBoundary>
             </div>
             <div className="footer-bar">
@@ -37,6 +37,3 @@ export default function ContentHolderComponent(props) {
     );
 }
 
-ContentHolderComponent.propTypes = {
-    movies:PropTypes.array.isRequired
-};

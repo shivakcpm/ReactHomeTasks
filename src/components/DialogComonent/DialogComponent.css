@@ -18,9 +18,27 @@
 .dialog-content {
   width: 50%;
   position: relative;
+  top: 50px;
+  margin: 20px 0;
   background: #232323;
 }
 
 .dialog-children {
   padding: 10px 50px;
+}
+
+.open-dialog {
+  display: flex;
+}
+
+.close-dialog {
+  display: none;
+}
+
+.close-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  color: #fff;
+  top: 10px;
 }

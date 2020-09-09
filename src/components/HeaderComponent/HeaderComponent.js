@@ -1,18 +1,34 @@
 import React, { createRef,  PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { DialogComponent } from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
-
+import { myContext } from '../../contextProvider';
 import './HeaderComponent.css';
 
 export class HeaderComponent extends PureComponent {
-    constructor(props) {
+    static contextType = myContext;
+    constructor(props, context) {
         super(props);
+        this.context = context;
         this.searchBar = createRef();
+        this.state = { open:false };
+    }
+
+    toggleModel= () => {
+        if (this.state.open) {
+            document.body.classList.remove('hide-scroll');
+        } else {
+            document.body.classList.add('hide-scroll');
+        }
+        this.setState({ open:!this.state.open });
     }
 
     handleClick = () => {
-        this.props.onSearch(this.searchBar.current.value);
+        this.context.onSearch(this.searchBar.current.value);
+    }
+
+    addMovie = (movie) => {
+        this.toggleModel();
+        this.context.addMovie(movie);
     }
 
     render() {
@@ -25,12 +41,12 @@ export class HeaderComponent extends PureComponent {
                             <strong>netflix</strong>
                             <span>roulette</span>
                         </div>
-                        <button className="add-movie"> + ADD MOVIE</button>
+                        <button className="add-movie" onClick={this.toggleModel}>  + ADD MOVIE</button>
                     </div>
 
                     <div>
-                        <DialogComponent >
-                            <AddMovieComponent></AddMovieComponent>
+                        <DialogComponent open={this.state.open} toggle={this.toggleModel}>
+                            <AddMovieComponent onSubmit={this.addMovie}></AddMovieComponent>
                         </DialogComponent>
                     </div>
                     <div className="find-movie-wrapper">
@@ -43,8 +59,4 @@ export class HeaderComponent extends PureComponent {
         );
     }
 }
-
-HeaderComponent.propTypes = {
-    onSearch:PropTypes.func
-};
 

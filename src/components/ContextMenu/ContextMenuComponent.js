@@ -10,7 +10,7 @@ export default function ContextMenu(props) {
 
                 {
                     props.menu.map((item, index) => {
-                        return <div className="menu-item" key = {index}>{item}</div>;
+                        return <div className="menu-item" onClick={props.onMenuItemClicked.bind(this, item)} key = {index}>{item}</div>;
                     })
                 }
             </div>

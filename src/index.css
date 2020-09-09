@@ -16,3 +16,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #555;
 }
+
+.hide-scroll {
+  overflow: hidden;
+}

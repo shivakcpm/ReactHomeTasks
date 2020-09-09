@@ -10,8 +10,10 @@
   width: 100%;
   background: #2e2e2e;
   height: 30px;
+  padding: 0 10px;
   color: #fff;
   border: none;
+  box-sizing: border-box;
   margin-bottom: 20px;
 }
 
@@ -22,4 +24,57 @@
   padding: 10px 0;
   margin: 25px 0;
   text-transform: uppercase;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-reset {
+  color: #f65261;
+  border: 1px solid #f65261;
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 100px;
+  margin-right: 20px;
+  background: transparent;
+}
+
+.button-submit {
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 100px;
+  background: #f65261;
+  border: 1px solid #f65261;
+}
+
+.input-field + .showErrors {
+  display: block;
+  color: #f65261;
+}
+
+.input-field + div {
+  display: none;
+  margin-bottom: 10px;
+}
+
+select.input-field {
+  margin-left: 0;
+}
+
+.movie-id {
+  padding: 0 10px;
+  color: #fff;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
 }
