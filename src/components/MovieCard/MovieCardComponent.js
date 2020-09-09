@@ -6,12 +6,13 @@ import { DialogComponent } from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import { myContext } from '../../contextProvider';
 import './MovieCard.css';
+import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
 
 export default class MovieCardComponent extends PureComponent {
     static contextType = myContext;
     constructor(props, context) {
         super(props);
-        this.state = { displayContext:false, openDialog:false };
+        this.state = { displayContext:false, openEditDialog:false, openDeleteDialog:false };
         this.context = context;
     }
 
@@ -20,22 +21,40 @@ export default class MovieCardComponent extends PureComponent {
     }
 
     updateMovie = (movie) => {
-        this.toggleModel();
+        this.toggleEditMovieDialog();
         this.context.editMovie(movie);
     }
 
     onMenuItemClicked = (item) => {
         this.setState({ displayContext:false });
-        this.toggleModel();
+        if (item.toLowerCase() === 'edit') {
+            this.toggleEditMovieDialog();
+        } else {
+            this.toggleDeleteDialog();
+        }
     }
 
-    toggleModel= () => {
-        if (this.state.openDialog) {
+    toggleEditMovieDialog= () => {
+        this.toggleBodyScroll(this.state.openEditDialog);
+        this.setState({ openEditDialog:!this.state.openEditDialog });
+    }
+
+    toggleBodyScroll(hide) {
+        if (hide) {
             document.body.classList.remove('hide-scroll');
         } else {
             document.body.classList.add('hide-scroll');
         }
-        this.setState({ openDialog:!this.state.openDialog });
+    }
+
+    toggleDeleteDialog = () => {
+        this.toggleBodyScroll(this.state.openDeleteDialog);
+        this.setState({ openDeleteDialog:!this.state.openDeleteDialog });
+    }
+
+    deleteMovie = () => {
+        this.toggleDeleteDialog();
+        this.context.deleteMovie(this.props.movie);
     }
 
     render() {
@@ -56,8 +75,11 @@ export default class MovieCardComponent extends PureComponent {
                 <div className={contextMenuClass}>
                     <ContextMenu menu={menu}  onMenuItemClicked= {this.onMenuItemClicked} closeHandler = {this.menuToggler}></ContextMenu>
                 </div>
-                <DialogComponent open={this.state.openDialog} toggle={this.toggleModel}>
+                <DialogComponent open={this.state.openEditDialog} toggle={this.toggleEditMovieDialog}>
                     <AddMovieComponent editMode="true" movie = {this.props.movie} onSubmit={this.updateMovie}></AddMovieComponent>
+                </DialogComponent>
+                <DialogComponent open={this.state.openDeleteDialog} toggle={this.toggleDeleteDialog}>
+                    <DeleteMovieComponent onDelete={this.deleteMovie} ></DeleteMovieComponent>
                 </DialogComponent>
                 <div className="card-footer">
                     <div className="title-info">
