@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import { genre as genreOptions } from '../../constants';
 import './AddMovie.css';
 
 export default class AddMovieComponent extends Component {
@@ -9,10 +10,8 @@ export default class AddMovieComponent extends Component {
     }
 
   onValueChange = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
       const movie = this.state.movie;
-      movie[name] = value;
+      movie[event.target.name] = event.target.value;
       this.setState({ movie });
   };
 
@@ -56,9 +55,9 @@ export default class AddMovieComponent extends Component {
   }
 
   render() {
-      const options = ['Horror', 'Comedy', 'Crime', 'Documentory'];
       const { editMode } = this.props;
       const { id, title, releaseDate, movieURL, genre, overview, runtime } = this.state.movie;
+
       return (
           <>
               <div className="addmovie-header">{ editMode
@@ -115,7 +114,7 @@ export default class AddMovieComponent extends Component {
                   name="genre"
               >
                   <option value="">Select Genre</option>
-                  {options.map((item, index) => {
+                  {genreOptions.map((item, index) => {
                       return (
                           <option key={index} value={item}>
                               {item}

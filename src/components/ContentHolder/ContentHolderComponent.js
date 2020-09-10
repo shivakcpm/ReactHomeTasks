@@ -7,11 +7,12 @@ import { myContext } from '../../contextProvider';
 import './ContentHolder.css';
 
 export default function ContentHolderComponent(props) {
+    const movies = useContext(myContext).movies;
+    const [sortOrder, setSortOrder] =  useState('releaseDate');
+
     const onTabChange = (index) => {
         console.log(TABS[index]);
     };
-    const movies = useContext(myContext).movies;
-    const [sortOrder, setSortOrder] =  useState('releaseDate');
 
     const handleSort = (event) => {
         const key = event.target.value === 'releaseDate'

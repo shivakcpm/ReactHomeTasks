@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import ContextMenu from '../ContextMenu/ContextMenuComponent';
 import { DialogComponent } from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import { myContext } from '../../contextProvider';
-import './MovieCard.css';
 import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
+import './MovieCard.css';
 
 export default class MovieCardComponent extends PureComponent {
     static contextType = myContext;
@@ -62,25 +61,31 @@ export default class MovieCardComponent extends PureComponent {
             movie: { title, releaseDate, category, src }
         } = this.props;
         const menu = ['Edit', 'Delete'];
-
-        const contextMenuClass = classnames({
-            show: this.state.displayContext,
-            hide:!this.state.displayContext
-        });
+        let contextMenu;
+        let editMovieDialog;
+        let deleteMovieDialog;
+        if (this.state.displayContext) {
+            contextMenu =
+                <ContextMenu menu={menu}  onMenuItemClicked= {this.onMenuItemClicked} closeHandler = {this.menuToggler}></ContextMenu>;
+        }
+        if (this.state.openEditDialog) {
+            editMovieDialog = <DialogComponent toggle={this.toggleEditMovieDialog}>
+                <AddMovieComponent editMode="true" movie = {this.props.movie} onSubmit={this.updateMovie}></AddMovieComponent>
+            </DialogComponent>;
+        }
+        if (this.state.openDeleteDialog) {
+            deleteMovieDialog =  <DialogComponent toggle={this.toggleDeleteDialog}>
+                <DeleteMovieComponent onDelete={this.deleteMovie} ></DeleteMovieComponent>
+            </DialogComponent>;
+        }
 
         return (
             <div className="movie-card">
                 <img src={src} alt={title}></img>
                 <div className="menu-icon" onClick={this.menuToggler.bind(this, true)}>&#xFE19; {this.contextType} </div>
-                <div className={contextMenuClass}>
-                    <ContextMenu menu={menu}  onMenuItemClicked= {this.onMenuItemClicked} closeHandler = {this.menuToggler}></ContextMenu>
-                </div>
-                <DialogComponent open={this.state.openEditDialog} toggle={this.toggleEditMovieDialog}>
-                    <AddMovieComponent editMode="true" movie = {this.props.movie} onSubmit={this.updateMovie}></AddMovieComponent>
-                </DialogComponent>
-                <DialogComponent open={this.state.openDeleteDialog} toggle={this.toggleDeleteDialog}>
-                    <DeleteMovieComponent onDelete={this.deleteMovie} ></DeleteMovieComponent>
-                </DialogComponent>
+                {contextMenu}
+                {editMovieDialog}
+                {deleteMovieDialog}
                 <div className="card-footer">
                     <div className="title-info">
                         <div className="title">{title}</div>

@@ -27,14 +27,6 @@
   padding: 10px 50px;
 }
 
-.open-dialog {
-  display: flex;
-}
-
-.close-dialog {
-  display: none;
-}
-
 .close-icon {
   cursor: pointer;
   position: absolute;
