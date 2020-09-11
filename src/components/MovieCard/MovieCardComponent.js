@@ -8,7 +8,7 @@ import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
 import './MovieCard.css';
 
 export default class MovieCardComponent extends PureComponent {
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = {
       isOpenContext: false,
@@ -17,7 +17,7 @@ export default class MovieCardComponent extends PureComponent {
     };
   }
 
-  menuToggler = (isOpenContext,event) => {
+  menuToggler = (isOpenContext, event) => {
     if (event) {
       event.stopPropagation();
   }
@@ -29,7 +29,7 @@ export default class MovieCardComponent extends PureComponent {
     this.toggleEditMovieDialog();
   };
 
-  onMenuItemClicked = (item,event) => {
+  onMenuItemClicked = (item, event) => {
     event.stopPropagation();
     this.setState({ isOpenContext: false });
     if (item === 'edit') {
@@ -58,9 +58,9 @@ export default class MovieCardComponent extends PureComponent {
     } = this.props;
 
     return (
-      <div className="movie-card">
+      <div className="movie-card" onClick={() => this.props.setMovieDetails(this.props.movie)}>
         <img src={src} alt={title}></img>
-        <div className="menu-icon" onClick={(event) => this.menuToggler(true,event)}>
+        <div className="menu-icon" onClick={(event) => this.menuToggler(true, event)}>
           &#xFE19; {this.contextType}{' '}
         </div>
         {this.state.isOpenContext && (

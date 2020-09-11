@@ -10,14 +10,14 @@ export default function MovieListComponent(props) {
     }
 
     return (
-      <>
-        <div className="movies-count">{movies.length} movies found</div>
-        <div className="movie-list">
-          {movies.map(value => (
-             <MovieCardComponent movie={value} key={value.id} editMovie={this.props.editMovie} deleteMovie={this.props.deleteMovie}/>
-          ))}
-        </div>
-      </>
+        <>
+            <div className="movies-count">{movies.length} movies found</div>
+            <div className="movie-list">
+                {movies.map((value) => {
+                    return <MovieCardComponent setMovieDetails={props.setMovieDetails} movie={value} key={value.id}  editMovie={props.editMovie} deleteMovie={props.deleteMovie} />;
+                })}
+            </div>
+        </>
     );
 }
 
