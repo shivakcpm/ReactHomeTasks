@@ -6,7 +6,7 @@
       "category": "Action & Adventure",
       "movieURL": "movie.com",
       "genre": "Comedy",
-      "overview": "overview",
+      "overview": "Pulp Fiction is a 1994 American crime filmnwritten  and directed by Quentin Tarantino; it is based on a story by Tantino and Roger Avary.Starring John Travolta,Samuel L.Jackson,Bruce Wills, Tim Roth and Uma Thurman, It tells several stories of criminal Los Angeles",
       "runtime": "154",
       "id":0
     },
@@ -68,11 +68,11 @@
     {
       "title": "Pulp Fiction",
       "src": "/public/pulp-fiction.PNG",
-      "releaseDate": "2004-10-30",
+      "releaseDate": "1994-10-30",
       "category": "Action & Adventure",
       "movieURL": "movie.com",
-      "genre": "Documentory",
-      "overview": "overview",
+      "genre": "Crime",
+      "overview": "Pulp Fiction is a 1994 American crime filmnwritten  and directed by Quentin Tarantino; it is based on a story by Tantino and Roger Avary.Starring John Travolta,Samuel L.Jackson,Bruce Wills, Tim Roth and Uma Thurman, It tells several stories of criminal Los Angeles",
       "runtime": "154",
       "id":6
     },
@@ -83,7 +83,7 @@
       "category": "Drama, Biography, Music",
       "movieURL": "movie.com",
       "genre": "Crime",
-      "overview": "overview",
+      "overview": "Bohemian Rhapsody is a 2004 American crime filmnwritten  and directed by Quentin Tarantino; it is based on a story by Tantino and Roger Avary.Starring John Travolta,Samuel L.Jackson,Bruce Wills, Tim Roth and Uma Thurman, It tells several stories of criminal Los Angeles",
       "runtime": "154",
       "id":7
     }

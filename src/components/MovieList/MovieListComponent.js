@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MovieCardComponent from '../MovieCard/MovieCardComponent';
 import PropTypes from 'prop-types';
 import './MovieListComponent.css';
 
-export default class MovieListComponent extends Component {
-  render() {
-    const { movies } = this.props;
+export default function MovieListComponent(props) {
+    const { movies } = props;
     if (movies.length === 0) {
-      throw new Error('no Movies found');
+        throw new Error('no Movies found');
     }
 
     return (
@@ -20,8 +19,8 @@ export default class MovieListComponent extends Component {
         </div>
       </>
     );
-  }
 }
+
 
 MovieListComponent.propTypes = {
   movies: PropTypes.array

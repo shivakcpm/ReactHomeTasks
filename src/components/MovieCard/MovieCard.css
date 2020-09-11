@@ -10,7 +10,7 @@
   box-sizing: border-box;
 }
 
-img {
+.image-view {
   height: 390px;
   width: 100%;
 }

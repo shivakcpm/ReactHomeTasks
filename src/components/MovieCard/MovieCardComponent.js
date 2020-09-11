@@ -17,7 +17,10 @@ export default class MovieCardComponent extends PureComponent {
     };
   }
 
-  menuToggler = isOpenContext => {
+  menuToggler = (isOpenContext,event) => {
+    if (event) {
+      event.stopPropagation();
+  }
     this.setState({ isOpenContext });
   };
 
@@ -26,7 +29,8 @@ export default class MovieCardComponent extends PureComponent {
     this.toggleEditMovieDialog();
   };
 
-  onMenuItemClicked = item => {
+  onMenuItemClicked = (item,event) => {
+    event.stopPropagation();
     this.setState({ isOpenContext: false });
     if (item === 'edit') {
       this.toggleEditMovieDialog();
@@ -56,7 +60,7 @@ export default class MovieCardComponent extends PureComponent {
     return (
       <div className="movie-card">
         <img src={src} alt={title}></img>
-        <div className="menu-icon" onClick={() => this.menuToggler(true)}>
+        <div className="menu-icon" onClick={(event) => this.menuToggler(true,event)}>
           &#xFE19; {this.contextType}{' '}
         </div>
         {this.state.isOpenContext && (
