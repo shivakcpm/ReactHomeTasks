@@ -1,22 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './DeleteMovie.css';
 
-export default class DeleteMovieComponent extends Component {
-  handleDelete = () => {
-      this.props.onDelete();
-  };
-
-  render() {
-      return (
-          <>
-              <div className="delete-movie-header">DELETE MOVIE</div>
-              <div className="delete-message">Are you sure you want to delete this movie?</div>
-              <div className="delete-button-wrapper">
-                  <button className="button-submit" onClick={this.handleDelete}>
-            CONFIRM
-                  </button>
-              </div>
-          </>
-      );
-  }
+export default function DeleteMovieComponent(props) {
+  return (
+    <>
+      <p className="delete-movie-header">DELETE MOVIE</p>
+      <p className="delete-message">Are you sure you want to delete this movie?</p>
+      <div className="delete-button-wrapper">
+        <button className="button-submit" onClick={props.onDelete}>
+          CONFIRM
+        </button>
+      </div>
+    </>
+  );
 }

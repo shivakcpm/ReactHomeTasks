@@ -3,107 +3,97 @@ import PropTypes from 'prop-types';
 import ContextMenu from '../ContextMenu/ContextMenuComponent';
 import { DialogComponent } from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
-import { myContext } from '../../contextProvider';
+import { MENU } from '../../constants';
 import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
 import './MovieCard.css';
 
 export default class MovieCardComponent extends PureComponent {
-    static contextType = myContext;
-    constructor(props, context) {
-        super(props);
-        this.state = { displayContext:false, openEditDialog:false, openDeleteDialog:false };
-        this.context = context;
-    }
+  constructor(props, context) {
+    super(props);
+    this.state = {
+      isOpenContext: false,
+      isOpenEditDialog: false,
+      isOpenDeleteDialog: false
+    };
+  }
 
-    menuToggler = (displayContext) => {
-        this.setState({ displayContext });
-    }
+  menuToggler = isOpenContext => {
+    this.setState({ isOpenContext });
+  };
 
-    updateMovie = (movie) => {
-        this.toggleEditMovieDialog();
-        this.context.editMovie(movie);
-    }
+  editMovie = movie => {
+    this.props.editMovie(movie);
+    this.toggleEditMovieDialog();
+  };
 
-    onMenuItemClicked = (item) => {
-        this.setState({ displayContext:false });
-        if (item.toLowerCase() === 'edit') {
-            this.toggleEditMovieDialog();
-        } else {
-            this.toggleDeleteDialog();
-        }
+  onMenuItemClicked = item => {
+    this.setState({ isOpenContext: false });
+    if (item === 'edit') {
+      this.toggleEditMovieDialog();
+    } else {
+      this.toggleDeleteDialog();
     }
+  };
 
-    toggleEditMovieDialog= () => {
-        this.toggleBodyScroll(this.state.openEditDialog);
-        this.setState({ openEditDialog:!this.state.openEditDialog });
-    }
+  toggleEditMovieDialog = () => {
+    this.setState({ isOpenEditDialog: !this.state.isOpenEditDialog });
+  };
 
-    toggleBodyScroll(hide) {
-        if (hide) {
-            document.body.classList.remove('hide-scroll');
-        } else {
-            document.body.classList.add('hide-scroll');
-        }
-    }
+  toggleDeleteDialog = () => {
+    this.setState({ isOpenDeleteDialog: !this.state.isOpenDeleteDialog });
+  };
 
-    toggleDeleteDialog = () => {
-        this.toggleBodyScroll(this.state.openDeleteDialog);
-        this.setState({ openDeleteDialog:!this.state.openDeleteDialog });
-    }
+  deleteMovie = () => {
+    this.props.deleteMovie(this.props.movie);
+    this.toggleDeleteDialog();
+  };
 
-    deleteMovie = () => {
-        this.toggleDeleteDialog();
-        this.context.deleteMovie(this.props.movie);
-    }
+  render() {
+    const {
+      movie: { title, releaseDate, category, src }
+    } = this.props;
 
-    render() {
-        const {
-            movie: { title, releaseDate, category, src }
-        } = this.props;
-        const menu = ['Edit', 'Delete'];
-        let contextMenu;
-        let editMovieDialog;
-        let deleteMovieDialog;
-        if (this.state.displayContext) {
-            contextMenu =
-                <ContextMenu menu={menu}  onMenuItemClicked= {this.onMenuItemClicked} closeHandler = {this.menuToggler}></ContextMenu>;
-        }
-        if (this.state.openEditDialog) {
-            editMovieDialog = <DialogComponent toggle={this.toggleEditMovieDialog}>
-                <AddMovieComponent editMode="true" movie = {this.props.movie} onSubmit={this.updateMovie}></AddMovieComponent>
-            </DialogComponent>;
-        }
-        if (this.state.openDeleteDialog) {
-            deleteMovieDialog =  <DialogComponent toggle={this.toggleDeleteDialog}>
-                <DeleteMovieComponent onDelete={this.deleteMovie} ></DeleteMovieComponent>
-            </DialogComponent>;
-        }
-
-        return (
-            <div className="movie-card">
-                <img src={src} alt={title}></img>
-                <div className="menu-icon" onClick={this.menuToggler.bind(this, true)}>&#xFE19; {this.contextType} </div>
-                {contextMenu}
-                {editMovieDialog}
-                {deleteMovieDialog}
-                <div className="card-footer">
-                    <div className="title-info">
-                        <div className="title">{title}</div>
-                        <div className="year">{new Date(releaseDate).getFullYear()}</div>
-                    </div>
-                    <div className="category">{category}</div>
-                </div>
-            </div>
-        );
-    }
+    return (
+      <div className="movie-card">
+        <img src={src} alt={title}></img>
+        <div className="menu-icon" onClick={() => this.menuToggler(true)}>
+          &#xFE19; {this.contextType}{' '}
+        </div>
+        {this.state.isOpenContext && (
+          <ContextMenu
+            menu={MENU}
+            onMenuItemClicked={this.onMenuItemClicked}
+            closeHandler={this.menuToggler}
+          ></ContextMenu>
+        )}
+        {this.state.isOpenEditDialog && (
+          <DialogComponent toggle={this.toggleEditMovieDialog}>
+            <AddMovieComponent editMode="true" movie={this.props.movie} onSubmit={this.editMovie}></AddMovieComponent>
+          </DialogComponent>
+        )}
+        {this.state.isOpenDeleteDialog && (
+          <DialogComponent toggle={this.toggleDeleteDialog}>
+            <DeleteMovieComponent onDelete={this.deleteMovie}></DeleteMovieComponent>
+          </DialogComponent>
+        )}
+        <div className="card-footer">
+          <div className="title-info">
+            <div className="title">{title}</div>
+            <div className="year">{new Date(releaseDate).getFullYear()}</div>
+          </div>
+          <div className="category">{category}</div>
+        </div>
+      </div>
+    );
+  }
 }
 
 MovieCardComponent.propTypes = {
-    movie:PropTypes.shape({
-        src:PropTypes.string.isRequired,
-        title:PropTypes.string.isRequired,
-        releaseDate:PropTypes.string.isRequired,
-        category:PropTypes.string.isRequired,
-        id:PropTypes.number.isRequired
-    })
+  movie: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    releaseDate: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired
+  })
 };

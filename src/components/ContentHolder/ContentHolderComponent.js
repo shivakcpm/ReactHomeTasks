@@ -1,59 +1,70 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { TABS } from '../../constants';
-import { myContext } from '../../contextProvider';
+import { Context } from '../../contextProvider';
+import { DEFAULT_SORT_BY } from '../../constants';
 import './ContentHolder.css';
 
 export default function ContentHolderComponent(props) {
-    const movies = useContext(myContext).movies;
-    const [sortOrder, setSortOrder] =  useState('releaseDate');
+  const movies = useContext(Context).movies;
+  const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
+  let allMovies = props.allMovies;
 
-    const onTabChange = (index) => {
-        console.log(TABS[index]);
-    };
+  const editMovie = movie => {
+    const moviesFiltered = allMovies.filter(item => item.id !== movie.id);
+    allMovies = [...moviesFiltered, movie];
+    props.setAllMovies(allMovies);
+  };
 
-    const handleSort = (event) => {
-        const key = event.target.value === 'releaseDate'
-            ? 'releaseDate'
-            : 'title';
-        setSortOrder(key);
-        sortMovies(key);
-    };
+  const deleteMovie = movie => {
+    allMovies = allMovies.filter(item => item.id !== movie.id);
+    props.setAllMovies(allMovies);
+  };
 
-    const sortMovies = (key) => {
-        movies.sort((val1, val2) => {
-            return val1[key] > val2[key]
-                ? 1
-                : -1;
-        });
-    };
+  const onTabChange = index => {
+    console.log(TABS[index]);
+  };
 
-    sortMovies(sortOrder);
+  const handleSort = event => {
+    const sortedBy = event.target.value === DEFAULT_SORT_BY
+      ? DEFAULT_SORT_BY
+      : 'title';
+    setSortOrder(sortedBy);
+  };
 
-    return (
-        <>
-            <div className="content-wrapper">
-                <div className="nav-head">
-                    <TabComponent tabs={TABS} tabChanged={onTabChange} />
-                    <div className="sort-container">
-                        <span>SORT BY</span>
-                        <select onChange={handleSort}>
-                            <option value="releaseDate">RELEASE DATE</option>
-                            <option value="name">NAME </option>
-                        </select>
-                    </div>
-                </div>
-                <ErrorBoundary key={movies.length}>
-                    <MovieListComponent  movies={movies} />
-                </ErrorBoundary>
-            </div>
-            <div className="footer-bar">
-                <strong>netflix</strong>
-                <span>roulette</span>
-            </div>
-        </>
-    );
+  const sortMovies = sortedBy => {
+    movies.sort((val1, val2) => {
+      return val1[sortedBy].localeCompare(val2[sortedBy]);
+    });
+  };
+
+  useEffect(() => {
+    return sortMovies(sortOrder);
+  }, [sortOrder]);
+
+  return (
+    <>
+      <div className="content-wrapper">
+        <div className="nav-head">
+          <TabComponent tabs={TABS} tabChanged={onTabChange} />
+          <div className="sort-container">
+            <span>SORT BY</span>
+            <select onChange={handleSort}>
+              <option value="releaseDate">RELEASE DATE</option>
+              <option value="name">NAME </option>
+            </select>
+          </div>
+        </div>
+        <ErrorBoundary>
+          <MovieListComponent movies={movies} editMovie={editMovie} deleteMovie={deleteMovie}/>
+        </ErrorBoundary>
+      </div>
+      <div className="footer-bar">
+        <strong>netflix</strong>
+        <span>roulette</span>
+      </div>
+    </>
+  );
 }
-
