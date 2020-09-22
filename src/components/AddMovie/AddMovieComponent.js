@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
-import { GENRE } from '../../constants';
-import { MOVIE } from '../../consts/movie';
+import { GENRE } from '../../consts/constants';
+import { DEFAULT_MOVIE } from '../../consts/movie';
 import './AddMovie.css';
 
 export default class AddMovieComponent extends Component {
@@ -10,27 +9,21 @@ export default class AddMovieComponent extends Component {
     this.state = this.getInitialState();
   }
 
-  onValueChange = event => {
-    const movie = { ...this.state.movie };
-    movie[event.target.name] = event.target.value;
-    this.setState({ movie });
-  };
-
-
-  handleBlur = event => {
-    const touched = {};
-    touched[event.target.name] = true;
-    this.setState({ touched });
+  onValueChange = ({ target: { value, name } }) => {
+    this.setState({
+      movie: {
+        ...this.state.movie,
+        [name]: value
+      }
+    });
   };
 
   getInitialState = () => {
-    const movie = { ...MOVIE, id:Math.random() };
-
+    const movie = { ...DEFAULT_MOVIE, id: Math.random() };
     const state = {
       movie: this.props.editMode
-        ? { ...this.props.movie }
-        : movie,
-      touched: {}
+        ? this.props.movie
+        : movie
     };
     return state;
   };
@@ -42,16 +35,16 @@ export default class AddMovieComponent extends Component {
   isDataValid() {
     const { title, releaseDate, movieURL, genre, overview, runtime } = this.state.movie;
     const errors = {};
-    if (this.isEmpty(title)) {
+    if (this.isEmptyField(title)) {
       errors.title = 'Title is required';
     }
-    if (this.isEmpty(movieURL)) {
+    if (this.isEmptyField(movieURL)) {
       errors.movieURL = 'MovieURL is required';
     }
-    if (this.isEmpty(overview)) {
+    if (this.isEmptyField(overview)) {
       errors.overview = 'Overview is required';
     }
-    if (this.isEmpty(genre)) {
+    if (this.isEmptyField(genre)) {
       errors.genre = 'Genre is required';
     }
     if (!releaseDate) {
@@ -66,158 +59,145 @@ export default class AddMovieComponent extends Component {
     return errors;
   }
 
-  isEmpty(value) {
+  isEmptyField(value) {
     return !value || !value.trim();
   }
 
   render() {
     const { editMode, onSubmit } = this.props;
-    const { id, title, releaseDate, movieURL, genre, overview, runtime } = this.state.movie;
-    const { touched } = this.state;
+    const {
+      movie,
+      movie: { id, title, releaseDate, movieURL, genre, overview, runtime }
+    } = this.state;
     const errors = this.isDataValid();
-    const disabled = Object.keys(errors).length > 0;
+    const isSubmitDisabled = Object.keys(errors).length > 0;
 
     return (
       <>
         <div className="addmovie-header">
-        {editMode
-            ? 'Edit Movie'
-            : 'Add Movie'
-        }</div>
+          {
+            editMode
+              ? 'Edit Movie'
+              : 'Add Movie'
+          }
+        </div>
         {editMode && (
           <>
             <label className="input-label">Movie Id</label>
             <div className="movie-id">{id}</div>
           </>
         )}
-        <label className="input-label" htmlFor="title">
-          Title
-        </label>
-        <input
-          className="input-field"
-          onChange={this.onValueChange}
-          onBlur={this.handleBlur}
-          placeholder="Movie Title here"
-          type="text"
-          id="title"
-          name="title"
-          value={title}
-        />
-        <div className={classnames({ showErrors: touched.title && errors.title })}>{errors.title}</div>
-        <label className="input-label" htmlFor="releaseDate">
-          Release Date
-        </label>
-        <input
-          className="input-field"
-          onChange={this.onValueChange}
-          onBlur={this.handleBlur}
-          placeholder="Select Date"
-          type="date"
-          id="releaseDate"
-          value={releaseDate}
-          name="releaseDate"
-        />
-        <div
-          className={classnames({
-            showErrors: touched.releaseDate && errors.releaseDate
-          })}
-        >
-          {errors.releaseDate}
+        <div>
+          <label className="input-label" htmlFor="title">
+            Title
+          </label>
+          <input
+            className="input-field"
+            onChange={this.onValueChange}
+            placeholder="Movie Title here"
+            type="text"
+            id="title"
+            name="title"
+            value={title}
+          />
+          {errors.title && <div className="showErrors">{errors.title}</div>}
         </div>
-        <label className="input-label" htmlFor="movieURL">
-          Movie URL
-        </label>
-        <input
-          className="input-field"
-          onChange={this.onValueChange}
-          onBlur={this.handleBlur}
-          placeholder="Movie URL here"
-          type="text"
-          value={movieURL}
-          name="movieURL"
-          id="movieURL"
-        />
-        <div
-          className={classnames({
-            showErrors: touched.movieURL && errors.movieURL
-          })}
-        >
-          {errors.movieURL}
+        <div>
+          <label className="input-label" htmlFor="releaseDate">
+            Release Date
+          </label>
+          <input
+            className="input-field"
+            onChange={this.onValueChange}
+            placeholder="Select Date"
+            type="date"
+            id="releaseDate"
+            value={releaseDate}
+            name="releaseDate"
+          />
+          {errors.releaseDate && <div className="showErrors">{errors.releaseDate}</div>}
         </div>
-        <label className="input-label" htmlFor="genre">
-          Genre
-        </label>
-        <select
-          className="input-field"
-          onChange={this.onValueChange}
-          type="text"
-          onBlur={this.handleBlur}
-          value={genre}
-          id="genre"
-          name="genre"
-        >
-          <option value="">Select Genre</option>
-          {GENRE.map((item, index) => {
-            return (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            );
-          })}
-        </select>
-        <div className={classnames({ showErrors: touched.genre && errors.genre })}>{errors.genre}</div>
-        <label className="input-label" htmlFor="overview">
-          Overview
-        </label>
-        <input
-          className="input-field"
-          onChange={this.onValueChange}
-          type="text"
-          onBlur={this.handleBlur}
-          value={overview}
-          placeholder="Overview here"
-          name="overview"
-          id="overview"
-        />
-        <div
-          className={classnames({
-            showErrors: touched.overview && errors.overview
-          })}
-        >
-          {errors.overview}
+        <div>
+          <label className="input-label" htmlFor="movieURL">
+            Movie URL
+          </label>
+          <input
+            className="input-field"
+            onChange={this.onValueChange}
+            placeholder="Movie URL here"
+            type="text"
+            value={movieURL}
+            name="movieURL"
+            id="movieURL"
+          />
+          {errors.movieURL && <div className="showErrors">{errors.movieURL}</div>}
         </div>
-        <label className="input-label" htmlFor="runtime">
-          RunTime
-        </label>
-        <input
-          className="input-field"
-          onChange={this.onValueChange}
-          type="text"
-          value={runtime}
-          onBlur={this.handleBlur}
-          id="runtime"
-          placeholder="Runtime here"
-          name="runtime"
-        />
-        <div
-          className={classnames({
-            showErrors: touched.runtime && errors.runtime
-          })}
-        >
-          {errors.runtime}
+        <div>
+          <label className="input-label" htmlFor="genre">
+            Genre
+          </label>
+          <select
+            className="input-field"
+            onChange={this.onValueChange}
+            type="text"
+            value={genre}
+            id="genre"
+            name="genre"
+          >
+            <option value="">Select Genre</option>
+            {GENRE.map((item, index) => {
+              return (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              );
+            })}
+          </select>
+          {errors.genre && <div className="showErrors">{errors.genre}</div>}
+        </div>
+        <div>
+          <label className="input-label" htmlFor="overview">
+            Overview
+          </label>
+          <input
+            className="input-field"
+            onChange={this.onValueChange}
+            type="text"
+            value={overview}
+            placeholder="Overview here"
+            name="overview"
+            id="overview"
+          />
+          {errors.overview && <div className="showErrors">{errors.overview}</div>}
+        </div>
+        <div>
+          <label className="input-label" htmlFor="runtime">
+            RunTime
+          </label>
+          <input
+            className="input-field"
+            onChange={this.onValueChange}
+            type="text"
+            value={runtime}
+            id="runtime"
+            placeholder="Runtime here"
+            name="runtime"
+          />
+          {errors.runtime && <div className="showErrors">{errors.runtime}</div>}
         </div>
         <div className="buttons-wrapper">
           <button className="button-reset" onClick={this.handleReset}>
             RESET
           </button>
           <button
-            disabled={disabled}
+            disabled={isSubmitDisabled}
             className="button-submit"
             onClick={() => {
-              onSubmit(this.state.movie);
+              onSubmit(movie);
             }}
           >
-            {editMode
+            {
+              editMode
                 ? 'SAVE'
                 : 'SUBMIT'
             }

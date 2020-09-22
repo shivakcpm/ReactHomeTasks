@@ -70,11 +70,3 @@ select.input-field {
   box-sizing: border-box;
   margin-bottom: 20px;
 }
-
-.visible {
-  display: block;
-}
-
-.hidden {
-  display: none;
-}

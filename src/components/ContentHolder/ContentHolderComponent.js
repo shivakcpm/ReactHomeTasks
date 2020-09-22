@@ -2,25 +2,21 @@ import React, { useContext, useState, useEffect } from 'react';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
-import { TABS } from '../../constants';
+import { TABS } from '../../consts/constants';
 import { Context } from '../../contextProvider';
-import { DEFAULT_SORT_BY } from '../../constants';
+import { DEFAULT_SORT_BY } from '../../consts/constants';
 import './ContentHolder.css';
 
 export default function ContentHolderComponent(props) {
-  const movies = useContext(Context).movies;
+  const { movies } = useContext(Context);
   const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
-  let allMovies = props.allMovies;
 
   const editMovie = movie => {
-    const moviesFiltered = allMovies.filter(item => item.id !== movie.id);
-    allMovies = [...moviesFiltered, movie];
-    props.setAllMovies(allMovies);
+    props.setAllMovies([...props.allMovies.filter(item => item.id !== movie.id), movie]);
   };
 
   const deleteMovie = movie => {
-    allMovies = allMovies.filter(item => item.id !== movie.id);
-    props.setAllMovies(allMovies);
+    props.setAllMovies(props.allMovies.filter(item => item.id !== movie.id));
   };
 
   const onTabChange = index => {
@@ -58,7 +54,7 @@ export default function ContentHolderComponent(props) {
           </div>
         </div>
         <ErrorBoundary>
-          <MovieListComponent movies={movies} editMovie={editMovie} deleteMovie={deleteMovie}/>
+          <MovieListComponent movies={movies} editMovie={editMovie} deleteMovie={deleteMovie} />
         </ErrorBoundary>
       </div>
       <div className="footer-bar">

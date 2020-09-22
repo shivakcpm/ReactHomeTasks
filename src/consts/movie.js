@@ -1,4 +1,4 @@
-export const MOVIE = {
+export const DEFAULT_MOVIE = {
     title: '',
     releaseDate: '',
     movieURL: '',

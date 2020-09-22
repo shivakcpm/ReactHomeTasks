@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ContextMenu from '../ContextMenu/ContextMenuComponent';
 import { DialogComponent } from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
-import { MENU } from '../../constants';
+import { MENU } from '../../consts/constants';
 import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
 import './MovieCard.css';
 
@@ -21,7 +21,7 @@ export default class MovieCardComponent extends PureComponent {
     this.setState({ isOpenContext });
   };
 
-  editMovie = movie => {
+  onEdit = movie => {
     this.props.editMovie(movie);
     this.toggleEditMovieDialog();
   };
@@ -43,13 +43,13 @@ export default class MovieCardComponent extends PureComponent {
     this.setState({ isOpenDeleteDialog: !this.state.isOpenDeleteDialog });
   };
 
-  deleteMovie = () => {
+  onDelete = () => {
     this.props.deleteMovie(this.props.movie);
     this.toggleDeleteDialog();
   };
 
   render() {
-    const {
+    const { movie,
       movie: { title, releaseDate, category, src }
     } = this.props;
 
@@ -60,20 +60,16 @@ export default class MovieCardComponent extends PureComponent {
           &#xFE19; {this.contextType}{' '}
         </div>
         {this.state.isOpenContext && (
-          <ContextMenu
-            menu={MENU}
-            onMenuItemClicked={this.onMenuItemClicked}
-            closeHandler={this.menuToggler}
-          ></ContextMenu>
+          <ContextMenu menu={MENU} onMenuItemClicked={this.onMenuItemClicked} closeHandler={this.menuToggler} />
         )}
         {this.state.isOpenEditDialog && (
           <DialogComponent toggle={this.toggleEditMovieDialog}>
-            <AddMovieComponent editMode="true" movie={this.props.movie} onSubmit={this.editMovie}></AddMovieComponent>
+            <AddMovieComponent editMode="true" movie={movie} onSubmit={this.onEdit}></AddMovieComponent>
           </DialogComponent>
         )}
         {this.state.isOpenDeleteDialog && (
           <DialogComponent toggle={this.toggleDeleteDialog}>
-            <DeleteMovieComponent onDelete={this.deleteMovie}></DeleteMovieComponent>
+            <DeleteMovieComponent onDelete={this.onDelete}></DeleteMovieComponent>
           </DialogComponent>
         )}
         <div className="card-footer">
