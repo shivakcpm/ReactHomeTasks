@@ -2,57 +2,89 @@
     {
       "title": "Pulp Fiction",
       "src": "/public/pulp-fiction.PNG",
-      "year": "2004",
+      "releaseDate": "2004-10-30",
       "category": "Action & Adventure",
+      "movieURL": "movie.com",
+      "genre": "Comedy",
+      "overview": "overview",
+      "runtime": "154",
       "id":0
     },
     {
       "title": "Inception",
       "src": "/public/inception.png",
-      "year": "1994",
+      "releaseDate": "1994-10-30",
       "category": "Action & Adventure",
+      "movieURL": "movie.com",
+      "genre": "Comedy",
+      "overview": "overview",
+      "runtime": "154",
       "id":1
     },
     {
       "title": "Bohemian Rhapsody",
       "src": "/public/bohemian.PNG",
-      "year": "2004",
+      "releaseDate": "2004-10-30",
       "category": "Drama, Biography, Music",
+      "movieURL": "movie.com",
+      "genre": "Comedy",
+      "overview": "overview",
+      "runtime": "154",
       "id":2
     },
     {
       "title": "Kill the bill",
       "src": "/public/killthebill.PNG",
-      "year": "1994",
+      "releaseDate": "1994-10-30",
       "category": "Oscar Winning Movie",
+      "movieURL": "movie.com",
+      "genre": "Comedy",
+      "overview": "overview",
+      "runtime": "154",
       "id":3
     },
     {
       "title": "Bohemian Rhapsody",
       "src": "/public/bohemian.PNG",
-      "year": "2004",
+      "releaseDate": "2004-10-30",
       "category": "Drama, Biography, Music",
+      "movieURL": "movie.com",
+      "genre": "Horror",
+      "overview": "overview",
+      "runtime": "154",
       "id":4
     },
     {
       "title": "Inception",
       "src": "/public/inception.png",
-      "year": "2003",
+      "releaseDate": "2003-10-30",
       "category": "Action & Adventure",
+      "movieURL": "movie.com",
+      "genre": "Horror",
+      "overview": "overview",
+      "runtime": "154",
       "id":5
     },
     {
       "title": "Pulp Fiction",
       "src": "/public/pulp-fiction.PNG",
-      "year": "2004",
+      "releaseDate": "2004-10-30",
       "category": "Action & Adventure",
+      "movieURL": "movie.com",
+      "genre": "Documentory",
+      "overview": "overview",
+      "runtime": "154",
       "id":6
     },
     {
       "title": "Bohemian Rhapsody",
       "src": "/public/bohemian.PNG",
-      "year": "2004",
+      "releaseDate": "2004-10-30",
       "category": "Drama, Biography, Music",
+      "movieURL": "movie.com",
+      "genre": "Crime",
+      "overview": "overview",
+      "runtime": "154",
       "id":7
     }
   ]

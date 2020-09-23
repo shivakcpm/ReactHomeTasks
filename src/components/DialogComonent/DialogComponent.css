@@ -1,0 +1,36 @@
+.dialog-parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .7);
+  z-index: 9999;
+  opacity: 1;
+  animation: show .5s ease;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.dialog-content {
+  width: 50%;
+  position: relative;
+  top: 50px;
+  margin: 20px 0;
+  background: #232323;
+}
+
+.dialog-children {
+  padding: 10px 50px;
+}
+
+.close-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  color: #fff;
+  top: 10px;
+}

@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ContentHolderComponent from '../ContentHolder/ContentHolderComponent';
 import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
-import movieList from '../../consts/movies.json';
+import { Context } from '../../contextProvider';
+import MOVIE_LIST from '../../consts/movies.json';
 
 export default function App() {
-    const [movies, setMovies] = useState(movieList);
+  const [movies, setMovies] = useState(MOVIE_LIST);
+  const [query, setQuery] = useState('');
 
-    const onSearch = (query) => {
-        const trimmedQuery = query.trim();
-        const filteredMovies = trimmedQuery
-            ? movieList.filter((item) =>
-                new RegExp(trimmedQuery, 'i').test(item.title)
-            )
-            : movieList;
-        setMovies(filteredMovies);
-    };
+  const filteredMovies = useCallback(() => {
+    return movies.filter(item => new RegExp(query, 'i').test(item.title));
+  }, [movies, query]);
 
-    return (
-        <React.StrictMode>
-            <div className="container">
-                <HeaderComponent onSearch={onSearch} />
-                <ContentHolderComponent movies={movies} />
-            </div>
-        </React.StrictMode>
-    );
+  return (
+    <React.StrictMode>
+      <div className="container">
+        <HeaderComponent allMovies={movies} setAllMovies={setMovies} setQuery={setQuery} />
+        <Context.Provider value={{ movies:filteredMovies() }}>
+          <ContentHolderComponent allMovies={movies} setAllMovies={setMovies} />
+        </Context.Provider>
+      </div>
+    </React.StrictMode>
+  );
 }

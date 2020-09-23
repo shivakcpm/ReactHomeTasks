@@ -1,0 +1,29 @@
+.delete-movie-header {
+  color: #fff;
+  font-size: 30px;
+  letter-spacing: 5px;
+  padding: 10px 0;
+  margin: 25px 0;
+  text-transform: uppercase;
+}
+
+.delete-message {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.delete-button-wrapper {
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: flex-end;
+}
+
+.button-submit {
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 100px;
+  background: #f65261;
+  border: 1px solid #f65261;
+}
