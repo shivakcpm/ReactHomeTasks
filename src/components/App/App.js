@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import ContentHolderComponent from '../ContentHolder/ContentHolderComponent';
 import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
+import MovieDetails from '../MovieDetails/MovieDetailsComponent';
 import { Context } from '../../contextProvider';
 import MOVIE_LIST from '../../consts/movies.json';
 
