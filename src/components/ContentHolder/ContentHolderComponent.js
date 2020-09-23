@@ -8,7 +8,7 @@ import { DEFAULT_SORT_BY } from '../../consts/constants';
 import './ContentHolder.css';
 
 export default function ContentHolderComponent(props) {
-const { movies } = useContext(Context);
+  const { movies } = useContext(Context);
   const [genre, setGenre] =  useState('All');
   const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
 
@@ -30,7 +30,7 @@ const { movies } = useContext(Context);
             : movies.filter(movie => movie.genre === genre);
         sortMovies(sortOrder, moviesByGenre);
         return moviesByGenre;
-    }, [genre, sortOrder]);
+    }, [genre, sortOrder, movies]);
 
     const handleSort = event => {
       const sortedBy = event.target.value === DEFAULT_SORT_BY
