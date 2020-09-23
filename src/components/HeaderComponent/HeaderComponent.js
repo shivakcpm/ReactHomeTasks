@@ -14,13 +14,14 @@ export class HeaderComponent extends PureComponent {
     this.setState({ isOpen: !this.state.isOpen });
   };
 
-  handleClick = () => {
-    this.props.onSearch(this.searchValue.current.value);
-  };
-
   addMovie = movie => {
     this.toggleModel();
-    this.props.addMovie(movie);
+    this.props.setAllMovies([...this.props.allMovies, movie]);
+  };
+
+  onSearch = () => {
+    const trimmedQuery = this.searchValue.current.value.trim();
+    this.props.setQuery(trimmedQuery);
   };
 
   render() {
@@ -46,7 +47,7 @@ export class HeaderComponent extends PureComponent {
           <div className="find-movie-wrapper">
             <div className="find-movie">Find your Movie</div>
             <input className="search-bar" ref={this.searchValue} placeholder="what do you want to watch?" />
-            <button className="search-button" onClick={this.handleClick}>
+            <button className="search-button" onClick={this.onSearch}>
               Search
             </button>
           </div>

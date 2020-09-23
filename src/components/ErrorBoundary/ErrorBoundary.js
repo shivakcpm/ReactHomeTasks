@@ -12,7 +12,7 @@ export class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    const { logErrors = true } = this.props;
+    const { logErrors = false } = this.props;
 
     if (logErrors) {
       console.log(error, errorInfo);
