@@ -20,7 +20,7 @@ export default class MovieCardComponent extends PureComponent {
   menuToggler = (isOpenContext, event) => {
     if (event) {
       event.stopPropagation();
-  }
+    }
     this.setState({ isOpenContext });
   };
 
@@ -53,14 +53,15 @@ export default class MovieCardComponent extends PureComponent {
   };
 
   render() {
-    const { movie,
+    const {
+      movie,
       movie: { title, releaseDate, category, src }
     } = this.props;
 
     return (
       <div className="movie-card" onClick={() => this.props.setMovieDetails(this.props.movie)}>
         <img src={src} alt={title}></img>
-        <div className="menu-icon" onClick={(event) => this.menuToggler(true, event)}>
+        <div className="menu-icon" onClick={event => this.menuToggler(true, event)}>
           &#xFE19; {this.contextType}{' '}
         </div>
         {this.state.isOpenContext && (
