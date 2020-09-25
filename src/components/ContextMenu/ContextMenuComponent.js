@@ -12,7 +12,7 @@ export default function ContextMenu(props) {
       <div className="menu-list">
         {props.menu.map((item, index) => {
           return (
-            <div className="menu-item" onClick={(event) => onMenuItemClicked(item, event)} key={index}>
+            <div className="menu-item" onClick={event => onMenuItemClicked(item, event)} key={index}>
               {item}
             </div>
           );
