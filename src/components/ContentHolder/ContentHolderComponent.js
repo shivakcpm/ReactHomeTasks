@@ -2,9 +2,8 @@ import React, { useContext, useState, useCallback, useMemo } from 'react';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
-import { TABS } from '../../consts/constants';
 import { Context } from '../../contextProvider';
-import { DEFAULT_SORT_BY, DEFAULT_FILTER_BY } from '../../consts/constants';
+import { TABS, DEFAULT_SORT_BY, DEFAULT_FILTER_BY } from '../../consts/constants';
 import './ContentHolder.css';
 
 const ContentHolderComponent = props => {
