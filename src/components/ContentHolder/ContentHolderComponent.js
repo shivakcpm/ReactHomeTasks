@@ -1,16 +1,16 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback, useMemo } from 'react';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { TABS } from '../../consts/constants';
 import { Context } from '../../contextProvider';
-import { DEFAULT_SORT_BY } from '../../consts/constants';
+import { DEFAULT_SORT_BY, DEFAULT_FILTER_BY } from '../../consts/constants';
 import './ContentHolder.css';
 
-export default function ContentHolderComponent(props) {
+const ContentHolderComponent = (props) => {
   const { movies } = useContext(Context);
-  const [genre, setGenre] = useState('All');
-  const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
+  const [filteredMovies, setFilteredMovies] = useState(movies);
+  const [sortedBy, setSortedBy] = useState(DEFAULT_SORT_BY);
 
   const editMovie = movie => {
     props.setAllMovies([...props.allMovies.filter(item => item.id !== movie.id), movie]);
@@ -21,29 +21,31 @@ export default function ContentHolderComponent(props) {
   };
 
   const onTabChange = index => {
-    setGenre(TABS[index]);
-  };
-
-  const genreChange = useCallback(() => {
-    const moviesByGenre = genre === 'All'
+    const genre = TABS[index];
+    setFilteredMovies(genre === DEFAULT_FILTER_BY
       ? movies
-      : movies.filter(movie => movie.genre === genre);
-    sortMovies(sortOrder, moviesByGenre);
-    return moviesByGenre;
-  }, [genre, sortOrder, movies]);
+      : movies.filter(movie => movie.genre === genre));
+  };
 
   const handleSort = event => {
-    const sortedBy = event.target.value === DEFAULT_SORT_BY
+    const sortOrder = event.target.value === DEFAULT_SORT_BY
       ? DEFAULT_SORT_BY
       : 'title';
-    setSortOrder(sortedBy);
+    setSortedBy(sortOrder);
   };
 
-  const sortMovies = (sortedBy, moviesByGenre) => {
-    moviesByGenre.sort((val1, val2) => {
-      return val1[sortedBy].localeCompare(val2[sortedBy]);
-    });
-  };
+  const sortMovies = useCallback(
+    () =>
+      filteredMovies.sort((val1, val2) => {
+        return val1[sortedBy].localeCompare(val2[sortedBy]);
+      }),
+    [sortedBy]
+  );
+
+  const moviesToDisplay = useMemo(() => {
+    sortMovies();
+    return filteredMovies;
+  }, [sortedBy, filteredMovies]);
 
   return (
     <>
@@ -61,7 +63,7 @@ export default function ContentHolderComponent(props) {
         <ErrorBoundary>
           <MovieListComponent
             setMovieDetails={props.setMovieDetails}
-            movies={genreChange()}
+            movies={moviesToDisplay}
             editMovie={editMovie}
             deleteMovie={deleteMovie}
           />
@@ -73,4 +75,6 @@ export default function ContentHolderComponent(props) {
       </div>
     </>
   );
-}
+};
+
+export default ContentHolderComponent;

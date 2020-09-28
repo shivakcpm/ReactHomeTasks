@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './TabComponent.css';
 
-export default function TabComponent(props) {
+const TabComponent = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const onTabChange = index => {
     setActiveTab(index);
@@ -27,9 +27,11 @@ export default function TabComponent(props) {
       })}
     </div>
   );
-}
+};
 
 TabComponent.propTypes = {
   tabs: PropTypes.array,
   tabChanged: PropTypes.func
 };
+
+export default TabComponent;

@@ -1,5 +1,5 @@
 import React, { createRef, PureComponent } from 'react';
-import { DialogComponent } from '../DialogComonent/DialogComponent';
+import DialogComponent  from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import './HeaderComponent.css';
 

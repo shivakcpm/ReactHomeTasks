@@ -3,7 +3,7 @@ import MovieCardComponent from '../MovieCard/MovieCardComponent';
 import PropTypes from 'prop-types';
 import './MovieListComponent.css';
 
-export default function MovieListComponent(props) {
+const MovieListComponent = (props) => {
   const { movies } = props;
   if (movies.length === 0) {
     throw new Error('no Movies found');
@@ -13,8 +13,8 @@ export default function MovieListComponent(props) {
     <>
       <div className="movies-count">{movies.length} movies found</div>
       <div className="movie-list">
-        {movies.map(value => {
-          return (
+        {movies.map(value =>
+           (
             <MovieCardComponent
               setMovieDetails={props.setMovieDetails}
               movie={value}
@@ -22,13 +22,15 @@ export default function MovieListComponent(props) {
               editMovie={props.editMovie}
               deleteMovie={props.deleteMovie}
             />
-          );
-        })}
+          )
+        )}
       </div>
     </>
   );
-}
+};
 
 MovieListComponent.propTypes = {
   movies: PropTypes.array
 };
+
+export default MovieListComponent;

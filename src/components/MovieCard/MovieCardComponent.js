@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ContextMenu from '../ContextMenu/ContextMenuComponent';
-import { DialogComponent } from '../DialogComonent/DialogComponent';
+import DialogComponent from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import { MENU } from '../../consts/constants';
 import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
@@ -18,9 +18,7 @@ export default class MovieCardComponent extends PureComponent {
   }
 
   menuToggler = (isOpenContext, event) => {
-    if (event) {
-      event.stopPropagation();
-    }
+    event.stopPropagation();
     this.setState({ isOpenContext });
   };
 
@@ -59,7 +57,7 @@ export default class MovieCardComponent extends PureComponent {
     } = this.props;
 
     return (
-      <div className="movie-card" onClick={() => this.props.setMovieDetails(this.props.movie)}>
+      <div className="movie-card" onClick={() => this.props.setMovieDetails(movie)}>
         <img src={src} alt={title}></img>
         <div className="menu-icon" onClick={event => this.menuToggler(true, event)}>
           &#xFE19; {this.contextType}{' '}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './DialogComponent.css';
 
-export function DialogComponent(props) {
+const DialogComponent = (props) => {
   return (
     <div className="dialog-parent">
       <div className="dialog-content">
@@ -12,4 +12,6 @@ export function DialogComponent(props) {
       </div>
     </div>
   );
-}
+};
+
+export default DialogComponent;

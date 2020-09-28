@@ -1,7 +1,7 @@
 import React from 'react';
 import './MovieDetails.css';
 
-export default function MovieDetails(props) {
+const MovieDetails = (props) => {
   return (
     <div className="header-wrapper">
       <div className="image-holder"></div>
@@ -11,7 +11,7 @@ export default function MovieDetails(props) {
             <strong>netflix</strong>
             <span>roulette</span>
           </div>
-          <img src="/public/searchIcon.PNG" onClick={props.goToHome.bind(this, null)} />
+          <img src="/public/searchIcon.PNG" onClick={() => props.goToHome(null)} />
         </div>
         <div className="movie-details-parent">
           <img className="details-image" src={props.src} />
@@ -27,4 +27,6 @@ export default function MovieDetails(props) {
       </div>
     </div>
   );
-}
+};
+
+export default MovieDetails;
