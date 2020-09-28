@@ -25,7 +25,6 @@ const ContentHolderComponent = props => {
   };
 
   const genreChange = useCallback(() => {
-    useSortMovies();
     const moviesByGenre = genre === DEFAULT_FILTER_BY
       ? movies
       : movies.filter(movie => movie.genre === genre);
@@ -46,6 +45,8 @@ const ContentHolderComponent = props => {
       });
     }, [sortOrder]);
   };
+
+  useSortMovies();
 
   return (
     <>
