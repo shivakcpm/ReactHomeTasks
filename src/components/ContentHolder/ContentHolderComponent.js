@@ -9,8 +9,8 @@ import './ContentHolder.css';
 
 const ContentHolderComponent = props => {
   const { movies } = useContext(Context);
-  const [filteredMovies, setFilteredMovies] = useState(movies);
-  const [sortedBy, setSortedBy] = useState(DEFAULT_SORT_BY);
+  const [genre, setGenre] = useState(DEFAULT_FILTER_BY);
+  const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
 
   const editMovie = movie => {
     props.setAllMovies([...props.allMovies.filter(item => item.id !== movie.id), movie]);
@@ -21,32 +21,30 @@ const ContentHolderComponent = props => {
   };
 
   const onTabChange = index => {
-    const genre = TABS[index];
-    setFilteredMovies(genre === DEFAULT_FILTER_BY
-      ? movies
-      : movies.filter(movie => movie.genre === genre));
+    setGenre(TABS[index]);
   };
+
+  const genreChange = useCallback(() => {
+    useSortMovies();
+    const moviesByGenre = genre === DEFAULT_FILTER_BY
+      ? movies
+      : movies.filter(movie => movie.genre === genre);
+    return moviesByGenre;
+  }, [genre, sortOrder, movies]);
 
   const handleSort = event => {
-    const sortOrder = event.target.value === DEFAULT_SORT_BY
+    const sortedBy = event.target.value === DEFAULT_SORT_BY
       ? DEFAULT_SORT_BY
       : 'title';
-    setSortedBy(sortOrder);
+    setSortOrder(sortedBy);
   };
 
-  const sortMovies = useCallback(
-    () =>
-      filteredMovies.sort((val1, val2) => {
-        return val1[sortedBy].localeCompare(val2[sortedBy]);
-      }),
-    [sortedBy]
-  );
-
-  const useDisplayMovies = () => {
-    return useMemo(() => {
-      sortMovies();
-      return filteredMovies;
-    }, [sortedBy, filteredMovies]);
+  const useSortMovies = () => {
+    useMemo(() => {
+      return movies.sort((val1, val2) => {
+        return val1[sortOrder].localeCompare(val2[sortOrder]);
+      });
+    }, [sortOrder]);
   };
 
   return (
@@ -65,7 +63,7 @@ const ContentHolderComponent = props => {
         <ErrorBoundary>
           <MovieListComponent
             setMovieDetails={props.setMovieDetails}
-            movies={useDisplayMovies()}
+            movies={genreChange()}
             editMovie={editMovie}
             deleteMovie={deleteMovie}
           />

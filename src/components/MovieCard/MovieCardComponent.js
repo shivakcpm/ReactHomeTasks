@@ -57,6 +57,7 @@ export default class MovieCardComponent extends PureComponent {
     } = this.props;
 
     return (
+      <>
       <div className="movie-card" onClick={() => this.props.setMovieDetails(movie)}>
         <img src={src} alt={title}></img>
         <div className="menu-icon" onClick={event => this.menuToggler(true, event)}>
@@ -64,16 +65,6 @@ export default class MovieCardComponent extends PureComponent {
         </div>
         {this.state.isOpenContext && (
           <ContextMenu menu={MENU} onMenuItemClicked={this.onMenuItemClicked} closeHandler={this.menuToggler} />
-        )}
-        {this.state.isOpenEditDialog && (
-          <DialogComponent toggle={this.toggleEditMovieDialog}>
-            <AddMovieComponent editMode="true" movie={movie} onSubmit={this.onEdit}></AddMovieComponent>
-          </DialogComponent>
-        )}
-        {this.state.isOpenDeleteDialog && (
-          <DialogComponent toggle={this.toggleDeleteDialog}>
-            <DeleteMovieComponent onDelete={this.onDelete}></DeleteMovieComponent>
-          </DialogComponent>
         )}
         <div className="card-footer">
           <div className="title-info">
@@ -83,6 +74,17 @@ export default class MovieCardComponent extends PureComponent {
           <div className="category">{category}</div>
         </div>
       </div>
+      {this.state.isOpenEditDialog && (
+          <DialogComponent toggle={this.toggleEditMovieDialog}>
+            <AddMovieComponent editMode="true" movie={movie} onSubmit={this.onEdit}></AddMovieComponent>
+          </DialogComponent>
+        )}
+        {this.state.isOpenDeleteDialog && (
+          <DialogComponent toggle={this.toggleDeleteDialog}>
+            <DeleteMovieComponent onDelete={this.onDelete}></DeleteMovieComponent>
+          </DialogComponent>
+        )}
+      </>
     );
   }
 }
