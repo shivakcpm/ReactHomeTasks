@@ -15,15 +15,15 @@ const App =  () => {
   }, [movies, query]);
 
   const componentToDisplay = movieDetails
-  ? <MovieDetails {...movieDetails} goToHome={setMovieDetails}/>
-  : <HeaderComponent allMovies={movies} setAllMovies={setMovies} setQuery={setQuery} />;
+    ? <MovieDetails {...movieDetails} goToHome={setMovieDetails}/>
+    : <HeaderComponent allMovies={movies} setAllMovies={setMovies} setQuery={setQuery} />;
 
   return (
     <React.StrictMode>
       <div className="container">
-      { componentToDisplay }
+      {componentToDisplay}
         <Context.Provider value={{movies:filteredMovies()}}>
-          <ContentHolderComponent setMovieDetails= {setMovieDetails} allMovies={movies} setAllMovies= {setMovies} />
+          <ContentHolderComponent setMovieDetails={setMovieDetails} allMovies={movies} setAllMovies={setMovies} />
         </Context.Provider>
       </div>
     </React.StrictMode>
