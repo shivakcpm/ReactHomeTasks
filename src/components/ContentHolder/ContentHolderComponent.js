@@ -7,7 +7,7 @@ import { Context } from '../../contextProvider';
 import { DEFAULT_SORT_BY, DEFAULT_FILTER_BY } from '../../consts/constants';
 import './ContentHolder.css';
 
-const ContentHolderComponent = (props) => {
+const ContentHolderComponent = props => {
   const { movies } = useContext(Context);
   const [filteredMovies, setFilteredMovies] = useState(movies);
   const [sortedBy, setSortedBy] = useState(DEFAULT_SORT_BY);
@@ -42,10 +42,12 @@ const ContentHolderComponent = (props) => {
     [sortedBy]
   );
 
-  const moviesToDisplay = useMemo(() => {
-    sortMovies();
-    return filteredMovies;
-  }, [sortedBy, filteredMovies]);
+  const useDisplayMovies = () => {
+    return useMemo(() => {
+      sortMovies();
+      return filteredMovies;
+    }, [sortedBy, filteredMovies]);
+  };
 
   return (
     <>
@@ -63,7 +65,7 @@ const ContentHolderComponent = (props) => {
         <ErrorBoundary>
           <MovieListComponent
             setMovieDetails={props.setMovieDetails}
-            movies={moviesToDisplay}
+            movies={useDisplayMovies()}
             editMovie={editMovie}
             deleteMovie={deleteMovie}
           />
