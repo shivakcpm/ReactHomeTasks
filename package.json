@@ -21,6 +21,7 @@
     "react-router": "^5.2.0",
     "react-test-renderer": "^16.13.1",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "stylelint": "^13.7.0",
     "stylelint-config-standard": "^20.0.0"
   },

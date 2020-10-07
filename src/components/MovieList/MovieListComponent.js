@@ -1,13 +1,24 @@
 import React from 'react';
 import MovieCardComponent from '../MovieCard/MovieCardComponent';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {store, deleteMovieActionAsync, editMovieActionAsync} from '../../store/store';
 import './MovieListComponent.css';
 
 const MovieListComponent = (props) => {
   const { movies } = props;
-  if (movies.length === 0) {
-    throw new Error('no Movies found');
-  }
+
+  const editMovie = movie => {
+    store.dispatch(editMovieActionAsync(movie)).then(() => {
+      props.fetchMovies();
+    });
+  };
+
+  const deleteMovie =  movie => {
+    store.dispatch(deleteMovieActionAsync(movie)).then(() => {
+      props.fetchMovies();
+    });
+  };
 
   return (
     <>
@@ -19,8 +30,8 @@ const MovieListComponent = (props) => {
               setMovieDetails={props.setMovieDetails}
               movie={value}
               key={value.id}
-              editMovie={props.editMovie}
-              deleteMovie={props.deleteMovie}
+              editMovie={editMovie}
+              deleteMovie={deleteMovie}
             />
           )
         )}
@@ -30,7 +41,14 @@ const MovieListComponent = (props) => {
 };
 
 MovieListComponent.propTypes = {
-  movies: PropTypes.array
+  movies: PropTypes.array,
+  fetchMovies:PropTypes.func
 };
 
-export default MovieListComponent;
+const mapDispatchToProps = (state) => {
+  return {
+      movies: state.movies.data || []
+  };
+};
+
+export default connect(mapDispatchToProps)(MovieListComponent);

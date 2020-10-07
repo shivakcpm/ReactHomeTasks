@@ -1,6 +1,7 @@
 import React, { createRef, PureComponent } from 'react';
 import DialogComponent  from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
+import { store, addMovieActionAsync } from '../../store/store';
 import './HeaderComponent.css';
 
 export class HeaderComponent extends PureComponent {
@@ -16,7 +17,8 @@ export class HeaderComponent extends PureComponent {
 
   addMovie = movie => {
     this.toggleModel();
-    this.props.setAllMovies([...this.props.allMovies, movie]);
+    store.dispatch(addMovieActionAsync(movie));
+    this.props.fetchMovies();
   };
 
   onSearch = () => {
@@ -56,3 +58,4 @@ export class HeaderComponent extends PureComponent {
     );
   }
 }
+

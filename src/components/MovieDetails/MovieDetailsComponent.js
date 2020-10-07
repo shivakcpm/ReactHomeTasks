@@ -14,12 +14,12 @@ const MovieDetails = (props) => {
           <img src="/public/searchIcon.PNG" onClick={() => props.goToHome(null)} />
         </div>
         <div className="movie-details-parent">
-          <img className="details-image" src={props.src} />
+          <img className="details-image" src={props.poster_path} />
           <div className="details-wrapper">
             <span className="movie-title">{props.title}</span>
-            <span className="rating">{props.rating}</span>
-            <div className="category">{props.category}</div>
-            <span className="release-date color-red">{new Date(props.releaseDate).getFullYear()}</span>
+            <span className="rating">{props.vote_average}</span>
+            <div className="category">{props.genres.join(', ')}</div>
+            <span className="release-date color-red">{new Date(props.release_date).getFullYear()}</span>
             <span className="color-red">{props.runtime} min</span>
             <p>{props.overview}</p>
           </div>
