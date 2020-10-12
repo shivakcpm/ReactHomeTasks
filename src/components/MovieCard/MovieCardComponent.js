@@ -5,6 +5,7 @@ import DialogComponent from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import { MENU } from '../../consts/constants';
 import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
+import { concatStrings } from '../../utils';
 import './MovieCard.css';
 
 export default class MovieCardComponent extends PureComponent {
@@ -46,7 +47,8 @@ export default class MovieCardComponent extends PureComponent {
   };
 
   onDelete = () => {
-    this.props.deleteMovie({id:this.props.movie.id});
+    const {movie:{id}} = this.props;
+    this.props.deleteMovie({id});
     this.toggleDeleteDialog();
   };
 
@@ -71,7 +73,7 @@ export default class MovieCardComponent extends PureComponent {
             <div className="title">{title}</div>
             <div className="year">{new Date(release_date).getFullYear()}</div>
           </div>
-          <div className="category">{genres.join(', ')}</div>
+          <div className="category">{concatStrings(genres)}</div>
         </div>
       </div>
       {this.state.isOpenEditDialog && (

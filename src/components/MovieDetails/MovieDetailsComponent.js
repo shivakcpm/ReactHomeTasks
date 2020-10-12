@@ -1,4 +1,5 @@
 import React from 'react';
+import { concatStrings } from '../../utils';
 import './MovieDetails.css';
 
 const MovieDetails = (props) => {
@@ -18,7 +19,7 @@ const MovieDetails = (props) => {
           <div className="details-wrapper">
             <span className="movie-title">{props.title}</span>
             <span className="rating">{props.vote_average}</span>
-            <div className="category">{props.genres.join(', ')}</div>
+            <div className="category">{concatStrings(props.genres)}</div>
             <span className="release-date color-red">{new Date(props.release_date).getFullYear()}</span>
             <span className="color-red">{props.runtime} min</span>
             <p>{props.overview}</p>

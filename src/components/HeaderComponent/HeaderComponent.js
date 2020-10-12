@@ -1,7 +1,7 @@
 import React, { createRef, PureComponent } from 'react';
 import DialogComponent  from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
-import { store, addMovieActionAsync } from '../../store/store';
+import { store, addMovieAsync } from '../../store/store';
 import './HeaderComponent.css';
 
 export class HeaderComponent extends PureComponent {
@@ -17,7 +17,7 @@ export class HeaderComponent extends PureComponent {
 
   addMovie = movie => {
     this.toggleModel();
-    store.dispatch(addMovieActionAsync(movie));
+    store.dispatch(addMovieAsync(movie));
     this.props.fetchMovies();
   };
 

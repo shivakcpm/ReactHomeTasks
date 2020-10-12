@@ -1,15 +1,14 @@
-import React, {  useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
 import MovieDetails from '../MovieDetails/MovieDetailsComponent';
 import { TABS, DEFAULT_SORT_BY, DEFAULT_FILTER_BY } from '../../consts/constants';
-import { store, getMoviesActionAsync } from '../../store/store';
-import { connect } from 'react-redux';
+import { store, getMoviesAsync } from '../../store/store';
 import './ContentHolder.css';
 
-const ContentHolderComponent = props => {
+const ContentHolderComponent = () => {
   const [genre, setGenre] = useState(DEFAULT_FILTER_BY);
   const [sortBy, setSortBy] = useState(DEFAULT_SORT_BY);
   const [movieDetails, setMovieDetails] = useState(null);
@@ -21,32 +20,37 @@ const ContentHolderComponent = props => {
 
   const fetchMovies = () => {
     const filterBy = genre !== DEFAULT_FILTER_BY
-      ? [genre]
+      ? genre
       : null;
-    store.dispatch(getMoviesActionAsync({search:query, searchBy:'title', sortOrder:'desc', sortBy,
-      filter:filterBy}));
+    store.dispatch(
+      getMoviesAsync({
+        search: query,
+        searchBy: 'title',
+        sortOrder: 'desc',
+        sortBy,
+        filter: filterBy
+      })
+    );
   };
-
-  const genreChange = useCallback(() => {
-   fetchMovies();
-  }, [genre, sortBy, query]);
 
   const handleSort = event => {
     const sortedBy = event.target.value === DEFAULT_SORT_BY
       ? DEFAULT_SORT_BY
       : 'title';
-      setSortBy(sortedBy);
+    setSortBy(sortedBy);
   };
-genreChange();
 
+  useEffect(() => {
+    fetchMovies();
+  }, [genre, sortBy, query]);
 
-const componentToDisplay = movieDetails
-  ? <MovieDetails {...movieDetails} goToHome={setMovieDetails}/>
-  : <HeaderComponent setQuery={setQuery} fetchMovies={fetchMovies} />;
+  const componentToDisplay = movieDetails
+    ? <MovieDetails {...movieDetails} goToHome={setMovieDetails} />
+    : <HeaderComponent setQuery={setQuery} fetchMovies={fetchMovies} />;
 
   return (
     <>
-    {componentToDisplay}
+      {componentToDisplay}
       <div className="content-wrapper">
         <div className="nav-head">
           <TabComponent tabs={TABS} tabChanged={onTabChange} />
@@ -59,10 +63,7 @@ const componentToDisplay = movieDetails
           </div>
         </div>
         <ErrorBoundary>
-          <MovieListComponent
-            fetchMovies = {fetchMovies}
-            setMovieDetails={setMovieDetails}
-          />
+          <MovieListComponent fetchMovies={fetchMovies} setMovieDetails={setMovieDetails} />
         </ErrorBoundary>
       </div>
       <div className="footer-bar">
@@ -74,11 +75,4 @@ const componentToDisplay = movieDetails
 };
 
 
-const mapDispatchToProps = (state) => {
-  return {
-    deleteMovie: state.deleteMovie || false
-  };
-};
-
-export default connect(mapDispatchToProps)(ContentHolderComponent);
-
+export default ContentHolderComponent;

@@ -14,26 +14,26 @@ export default class AddMovieComponent extends Component {
       movie: {
         ...this.state.movie,
         [name]: name === 'runtime'
-          ? +value
+          ? Number(value)
           : value
       }
     });
   };
 
-  handleChange = ({ target: {selectedOptions, name } }) => {
-  this.setState({
-    movie: {
-      ...this.state.movie,
-      [name]: Array.from(selectedOptions, (item) => item.value)
-    }
-  });
-  }
+  handleChange = ({ target: { selectedOptions, name } }) => {
+    this.setState({
+      movie: {
+        ...this.state.movie,
+        [name]: Array.from(selectedOptions, item => item.value)
+      }
+    });
+  };
 
   getInitialState = () => {
     const movie = { ...DEFAULT_MOVIE };
     const state = {
       movie: this.props.editMode
-        ? {...movie, ...this.props.movie}
+        ? this.props.movie
         : movie
     };
     return state;
@@ -85,13 +85,11 @@ export default class AddMovieComponent extends Component {
 
     return (
       <>
-        <div className="addmovie-header">
-          {
-            editMode
-              ? 'Edit Movie'
-              : 'Add Movie'
-          }
-        </div>
+       <div className="addmovie-header">
+        {editMode
+            ? 'Edit Movie'
+            : 'Add Movie'
+        }</div>
         {editMode && (
           <>
             <label className="input-label">Movie Id</label>
@@ -188,7 +186,7 @@ export default class AddMovieComponent extends Component {
           <input
             className="input-field"
             onChange={this.onValueChange}
-            type="number"
+            type="text"
             value={runtime}
             id="runtime"
             placeholder="Runtime here"
@@ -207,11 +205,9 @@ export default class AddMovieComponent extends Component {
               onSubmit(movie);
             }}
           >
-            {
-              editMode
-                ? 'SAVE'
-                : 'SUBMIT'
-            }
+            {editMode
+              ? 'SAVE'
+              : 'SUBMIT'}
           </button>
         </div>
       </>

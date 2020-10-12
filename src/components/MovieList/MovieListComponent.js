@@ -2,20 +2,20 @@ import React from 'react';
 import MovieCardComponent from '../MovieCard/MovieCardComponent';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {store, deleteMovieActionAsync, editMovieActionAsync} from '../../store/store';
+import {store, deleteMovieAsync, editMovieAsync} from '../../store/store';
 import './MovieListComponent.css';
 
 const MovieListComponent = (props) => {
   const { movies } = props;
 
   const editMovie = movie => {
-    store.dispatch(editMovieActionAsync(movie)).then(() => {
+    store.dispatch(editMovieAsync(movie)).then(() => {
       props.fetchMovies();
     });
   };
 
   const deleteMovie =  movie => {
-    store.dispatch(deleteMovieActionAsync(movie)).then(() => {
+    store.dispatch(deleteMovieAsync(movie)).then(() => {
       props.fetchMovies();
     });
   };
@@ -47,7 +47,7 @@ MovieListComponent.propTypes = {
 
 const mapDispatchToProps = (state) => {
   return {
-      movies: state.movies.data || []
+      movies: state.moviesData.data || []
   };
 };
 

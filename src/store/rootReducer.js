@@ -1,8 +1,7 @@
-
 import * as actions from './actions';
 
 const initialState = {
-    movies:{}
+    moviesData:{}
 };
 
 const rootReducer = (state = initialState, action) => {
