@@ -1,18 +1,18 @@
 import React from 'react';
 import './ContextMenu.css';
 
-export default function ContextMenu(props) {
+const ContextMenu = (props) => {
   const { closeHandler, onMenuItemClicked } = props;
 
   return (
-    <div className="context-menu" onMouseLeave={() => closeHandler(false)}>
-      <div className="close" onClick={() => closeHandler(false)}>
+    <div className="context-menu" onMouseLeave={(event) => closeHandler(false, event)}>
+      <div className="close" onClick={(event) => closeHandler(false, event)}>
         &#10006;
       </div>
       <div className="menu-list">
         {props.menu.map((item, index) => {
           return (
-            <div className="menu-item" onClick={() => onMenuItemClicked(item)} key={index}>
+            <div className="menu-item" onClick={event => onMenuItemClicked(item, event)} key={index}>
               {item}
             </div>
           );
@@ -20,4 +20,6 @@ export default function ContextMenu(props) {
       </div>
     </div>
   );
-}
+};
+
+export default ContextMenu;

@@ -1,14 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useCallback, useMemo } from 'react';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
-import { TABS } from '../../consts/constants';
 import { Context } from '../../contextProvider';
-import { DEFAULT_SORT_BY } from '../../consts/constants';
+import { TABS, DEFAULT_SORT_BY, DEFAULT_FILTER_BY } from '../../consts/constants';
 import './ContentHolder.css';
 
-export default function ContentHolderComponent(props) {
+const ContentHolderComponent = props => {
   const { movies } = useContext(Context);
+  const [genre, setGenre] = useState(DEFAULT_FILTER_BY);
   const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
 
   const editMovie = movie => {
@@ -20,8 +20,15 @@ export default function ContentHolderComponent(props) {
   };
 
   const onTabChange = index => {
-    console.log(TABS[index]);
+    setGenre(TABS[index]);
   };
+
+  const genreChange = useCallback(() => {
+    const moviesByGenre = genre === DEFAULT_FILTER_BY
+      ? movies
+      : movies.filter(movie => movie.genre === genre);
+    return moviesByGenre;
+  }, [genre, sortOrder, movies]);
 
   const handleSort = event => {
     const sortedBy = event.target.value === DEFAULT_SORT_BY
@@ -30,15 +37,15 @@ export default function ContentHolderComponent(props) {
     setSortOrder(sortedBy);
   };
 
-  const sortMovies = sortedBy => {
-    movies.sort((val1, val2) => {
-      return val1[sortedBy].localeCompare(val2[sortedBy]);
-    });
+  const useSortMovies = () => {
+    useMemo(() => {
+      return movies.sort((val1, val2) => {
+        return val1[sortOrder].localeCompare(val2[sortOrder]);
+      });
+    }, [sortOrder]);
   };
 
-  useEffect(() => {
-    return sortMovies(sortOrder);
-  }, [sortOrder]);
+  useSortMovies();
 
   return (
     <>
@@ -54,7 +61,12 @@ export default function ContentHolderComponent(props) {
           </div>
         </div>
         <ErrorBoundary>
-          <MovieListComponent movies={movies} editMovie={editMovie} deleteMovie={deleteMovie} />
+          <MovieListComponent
+            setMovieDetails={props.setMovieDetails}
+            movies={genreChange()}
+            editMovie={editMovie}
+            deleteMovie={deleteMovie}
+          />
         </ErrorBoundary>
       </div>
       <div className="footer-bar">
@@ -63,4 +75,6 @@ export default function ContentHolderComponent(props) {
       </div>
     </>
   );
-}
+};
+
+export default ContentHolderComponent;

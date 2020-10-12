@@ -13,7 +13,6 @@ export class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     const { logErrors = false } = this.props;
-
     if (logErrors) {
       console.log(error, errorInfo);
     }

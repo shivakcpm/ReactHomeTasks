@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ContextMenu from '../ContextMenu/ContextMenuComponent';
-import { DialogComponent } from '../DialogComonent/DialogComponent';
+import DialogComponent from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import { MENU } from '../../consts/constants';
 import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
 import './MovieCard.css';
 
 export default class MovieCardComponent extends PureComponent {
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = {
       isOpenContext: false,
@@ -17,7 +17,8 @@ export default class MovieCardComponent extends PureComponent {
     };
   }
 
-  menuToggler = isOpenContext => {
+  menuToggler = (isOpenContext, event) => {
+    event.stopPropagation();
     this.setState({ isOpenContext });
   };
 
@@ -26,7 +27,8 @@ export default class MovieCardComponent extends PureComponent {
     this.toggleEditMovieDialog();
   };
 
-  onMenuItemClicked = item => {
+  onMenuItemClicked = (item, event) => {
+    event.stopPropagation();
     this.setState({ isOpenContext: false });
     if (item === 'edit') {
       this.toggleEditMovieDialog();
@@ -49,28 +51,20 @@ export default class MovieCardComponent extends PureComponent {
   };
 
   render() {
-    const { movie,
+    const {
+      movie,
       movie: { title, releaseDate, category, src }
     } = this.props;
 
     return (
-      <div className="movie-card">
+      <>
+      <div className="movie-card" onClick={() => this.props.setMovieDetails(movie)}>
         <img src={src} alt={title}></img>
-        <div className="menu-icon" onClick={() => this.menuToggler(true)}>
+        <div className="menu-icon" onClick={event => this.menuToggler(true, event)}>
           &#xFE19; {this.contextType}{' '}
         </div>
         {this.state.isOpenContext && (
           <ContextMenu menu={MENU} onMenuItemClicked={this.onMenuItemClicked} closeHandler={this.menuToggler} />
-        )}
-        {this.state.isOpenEditDialog && (
-          <DialogComponent toggle={this.toggleEditMovieDialog}>
-            <AddMovieComponent editMode="true" movie={movie} onSubmit={this.onEdit}></AddMovieComponent>
-          </DialogComponent>
-        )}
-        {this.state.isOpenDeleteDialog && (
-          <DialogComponent toggle={this.toggleDeleteDialog}>
-            <DeleteMovieComponent onDelete={this.onDelete}></DeleteMovieComponent>
-          </DialogComponent>
         )}
         <div className="card-footer">
           <div className="title-info">
@@ -80,6 +74,17 @@ export default class MovieCardComponent extends PureComponent {
           <div className="category">{category}</div>
         </div>
       </div>
+      {this.state.isOpenEditDialog && (
+          <DialogComponent toggle={this.toggleEditMovieDialog}>
+            <AddMovieComponent editMode="true" movie={movie} onSubmit={this.onEdit}></AddMovieComponent>
+          </DialogComponent>
+        )}
+        {this.state.isOpenDeleteDialog && (
+          <DialogComponent toggle={this.toggleDeleteDialog}>
+            <DeleteMovieComponent onDelete={this.onDelete}></DeleteMovieComponent>
+          </DialogComponent>
+        )}
+      </>
     );
   }
 }

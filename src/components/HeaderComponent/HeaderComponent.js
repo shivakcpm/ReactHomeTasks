@@ -1,5 +1,5 @@
 import React, { createRef, PureComponent } from 'react';
-import { DialogComponent } from '../DialogComonent/DialogComponent';
+import DialogComponent  from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import './HeaderComponent.css';
 
@@ -39,11 +39,6 @@ export class HeaderComponent extends PureComponent {
               + ADD MOVIE
             </button>
           </div>
-          {this.state.isOpen && (
-            <DialogComponent toggle={this.toggleModel}>
-              <AddMovieComponent onSubmit={this.addMovie}></AddMovieComponent>
-            </DialogComponent>
-          )}
           <div className="find-movie-wrapper">
             <div className="find-movie">Find your Movie</div>
             <input className="search-bar" ref={this.searchValue} placeholder="what do you want to watch?" />
@@ -52,6 +47,11 @@ export class HeaderComponent extends PureComponent {
             </button>
           </div>
         </div>
+        {this.state.isOpen && (
+          <DialogComponent toggle={this.toggleModel}>
+            <AddMovieComponent onSubmit={this.addMovie}></AddMovieComponent>
+          </DialogComponent>
+        )}
       </div>
     );
   }

@@ -1,0 +1,50 @@
+.movie-details-parent {
+  display: flex;
+  color: #cdcdcd;
+}
+
+.details-image {
+  height: 300px;
+  margin-left: 20px;
+}
+
+.movie-title {
+  font-size: 30px;
+  letter-spacing: 3px;
+  padding: 10px 0;
+  margin-right: 10px;
+}
+
+.details-wrapper {
+  margin-left: 50px;
+}
+
+.rating {
+  display: inline-block;
+  width: 35px;
+  box-sizing: border-box;
+  padding: 5px;
+  height: 35px;
+  text-align: center;
+  border-radius: 50%;
+  border: 1px solid #747474;
+  color: #6c9b4b;
+}
+
+.category {
+  padding: 5px 0;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.release-date {
+  margin-right: 30px;
+}
+
+.color-red {
+  color: #e04b59;
+}
+
+.search-icon {
+  font-size: 20px;
+}

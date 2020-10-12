@@ -1,7 +1,7 @@
 import React from 'react';
 import './DeleteMovie.css';
 
-export default function DeleteMovieComponent(props) {
+const DeleteMovieComponent = (props) => {
   return (
     <>
       <p className="delete-movie-header">DELETE MOVIE</p>
@@ -13,4 +13,6 @@ export default function DeleteMovieComponent(props) {
       </div>
     </>
   );
-}
+};
+
+export default DeleteMovieComponent;
