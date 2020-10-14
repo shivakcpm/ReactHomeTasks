@@ -1,50 +1,12 @@
 import React, { Component } from 'react';
+import { Formik } from 'formik';
 import { GENRE } from '../../consts/constants';
 import { DEFAULT_MOVIE } from '../../consts/movie';
 import './AddMovie.css';
 
 export default class AddMovieComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
-
-  onValueChange = ({ target: { value, name } }) => {
-    this.setState({
-      movie: {
-        ...this.state.movie,
-        [name]: name === 'runtime'
-          ? Number(value)
-          : value
-      }
-    });
-  };
-
-  handleChange = ({ target: { selectedOptions, name } }) => {
-    this.setState({
-      movie: {
-        ...this.state.movie,
-        [name]: Array.from(selectedOptions, item => item.value)
-      }
-    });
-  };
-
-  getInitialState = () => {
-    const movie = { ...DEFAULT_MOVIE };
-    const state = {
-      movie: this.props.editMode
-        ? this.props.movie
-        : movie
-    };
-    return state;
-  };
-
-  handleReset = () => {
-    this.setState(this.getInitialState());
-  };
-
-  isDataValid() {
-    const { title, release_date, poster_path, genres, overview, runtime } = this.state.movie;
+  isDataValid(values) {
+    const { title, release_date, poster_path, genres, overview, runtime } = values;
     const errors = {};
     if (this.isEmptyField(title)) {
       errors.title = 'Title is required';
@@ -76,143 +38,152 @@ export default class AddMovieComponent extends Component {
 
   render() {
     const { editMode, onSubmit } = this.props;
-    const {
-      movie,
-      movie: { id, title, release_date, poster_path, genres, overview, runtime }
-    } = this.state;
-    const errors = this.isDataValid();
-    const isSubmitDisabled = Object.keys(errors).length > 0;
+    const movie = this.props.movie || DEFAULT_MOVIE;
 
     return (
-      <>
-       <div className="addmovie-header">
-        {editMode
-          ? 'Edit Movie'
-          : 'Add Movie'
-        }</div>
-        {editMode && (
-          <>
-            <label className="input-label">Movie Id</label>
-            <div className="movie-id">{id}</div>
-          </>
+      <Formik
+        initialValues={movie}
+        validate={values => {
+          return this.isDataValid(values);
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          values.runtime = Number(values.runtime);
+          onSubmit(values);
+          setSubmitting(false);
+        }}
+      >
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isSubmitting }) => (
+          <form onSubmit={handleSubmit}>
+            <div className="addmovie-header">{editMode
+              ? 'Edit Movie'
+              : 'Add Movie'}</div>
+            {editMode && (
+              <>
+                <label className="input-label">Movie Id</label>
+                <div className="movie-id">{values.id}</div>
+              </>
+            )}
+            <div>
+              <label className="input-label" htmlFor="title">
+                Title
+              </label>
+              <input
+                className="input-field"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Movie Title here"
+                type="text"
+                id="title"
+                name="title"
+                value={values.title}
+              />
+              {touched.title && errors.title && <div className="showErrors">{errors.title}</div>}
+            </div>
+            <div>
+              <label className="input-label" htmlFor="release_date">
+                Release Date
+              </label>
+              <input
+                className="input-field"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Select Date"
+                type="date"
+                id="release_date"
+                value={values.release_date}
+                name="release_date"
+              />
+              {touched.release_date && errors.release_date && <div className="showErrors">{errors.release_date}</div>}
+            </div>
+            <div>
+              <label className="input-label" htmlFor="poster_path">
+                Movie URL
+              </label>
+              <input
+                className="input-field"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Movie URL here"
+                type="text"
+                value={values.poster_path}
+                name="poster_path"
+                id="poster_path"
+              />
+              {errors.poster_path && <div className="showErrors">{errors.poster_path}</div>}
+            </div>
+            <div>
+              <label className="input-label" htmlFor="genres">
+                Genre
+              </label>
+              <select
+                className="input-field"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.genres}
+                multiple
+                id="genres"
+                name="genres"
+              >
+                <option value="">Select Genre</option>
+                {GENRE.map((item, index) => {
+                  return (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  );
+                })}
+              </select>
+              {touched.genres && errors.genres && <div className="showErrors">{errors.genres}</div>}
+            </div>
+            <div>
+              <label className="input-label" htmlFor="overview">
+                Overview
+              </label>
+              <input
+                className="input-field"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                type="text"
+                value={values.overview}
+                placeholder="Overview here"
+                name="overview"
+                id="overview"
+              />
+              {touched.overview && errors.overview && <div className="showErrors">{errors.overview}</div>}
+            </div>
+            <div>
+              <label className="input-label" htmlFor="runtime">
+                RunTime
+              </label>
+              <input
+                className="input-field"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                type="text"
+                value={values.runtime}
+                id="runtime"
+                placeholder="Runtime here"
+                name="runtime"
+              />
+              {touched.runtime && errors.runtime && <div className="showErrors">{errors.runtime}</div>}
+            </div>
+            <div className="buttons-wrapper">
+              <button className="button-reset" onClick={handleReset}>
+                RESET
+              </button>
+              <button
+                disabled={Object.keys(errors).length > 0 || isSubmitting}
+                className="button-submit"
+                onClick={handleSubmit}
+              >
+                {editMode
+                  ? 'SAVE'
+                  : 'SUBMIT'}
+              </button>
+            </div>
+          </form>
         )}
-        <div>
-          <label className="input-label" htmlFor="title">
-            Title
-          </label>
-          <input
-            className="input-field"
-            onChange={this.onValueChange}
-            placeholder="Movie Title here"
-            type="text"
-            id="title"
-            name="title"
-            value={title}
-          />
-          {errors.title && <div className="showErrors">{errors.title}</div>}
-        </div>
-        <div>
-          <label className="input-label" htmlFor="release_date">
-            Release Date
-          </label>
-          <input
-            className="input-field"
-            onChange={this.onValueChange}
-            placeholder="Select Date"
-            type="date"
-            id="release_date"
-            value={release_date}
-            name="release_date"
-          />
-          {errors.release_date && <div className="showErrors">{errors.release_date}</div>}
-        </div>
-        <div>
-          <label className="input-label" htmlFor="poster_path">
-            Movie URL
-          </label>
-          <input
-            className="input-field"
-            onChange={this.onValueChange}
-            placeholder="Movie URL here"
-            type="text"
-            value={poster_path}
-            name="poster_path"
-            id="poster_path"
-          />
-          {errors.poster_path && <div className="showErrors">{errors.poster_path}</div>}
-        </div>
-        <div>
-          <label className="input-label" htmlFor="genres">
-            Genre
-          </label>
-          <select
-            className="input-field"
-            onChange={this.handleChange}
-            value={genres}
-            multiple
-            id="genres"
-            name="genres"
-          >
-            <option value="">Select Genre</option>
-            {GENRE.map((item, index) => {
-              return (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
-          {errors.genres && <div className="showErrors">{errors.genres}</div>}
-        </div>
-        <div>
-          <label className="input-label" htmlFor="overview">
-            Overview
-          </label>
-          <input
-            className="input-field"
-            onChange={this.onValueChange}
-            type="text"
-            value={overview}
-            placeholder="Overview here"
-            name="overview"
-            id="overview"
-          />
-          {errors.overview && <div className="showErrors">{errors.overview}</div>}
-        </div>
-        <div>
-          <label className="input-label" htmlFor="runtime">
-            RunTime
-          </label>
-          <input
-            className="input-field"
-            onChange={this.onValueChange}
-            type="text"
-            value={runtime}
-            id="runtime"
-            placeholder="Runtime here"
-            name="runtime"
-          />
-          {errors.runtime && <div className="showErrors">{errors.runtime}</div>}
-        </div>
-        <div className="buttons-wrapper">
-          <button className="button-reset" onClick={this.handleReset}>
-            RESET
-          </button>
-          <button
-            disabled={isSubmitDisabled}
-            className="button-submit"
-            onClick={() => {
-              onSubmit(movie);
-            }}
-          >
-            {
-              editMode
-                ? 'SAVE'
-                : 'SUBMIT'
-            }
-          </button>
-        </div>
-      </>
+      </Formik>
     );
   }
 }
