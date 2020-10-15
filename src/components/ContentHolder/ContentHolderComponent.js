@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import TabComponent from '../TabComponent/TabComponent';
 import MovieListComponent from '../MovieList/MovieListComponent';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
-import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
+import  HeaderComponent  from '../HeaderComponent/HeaderComponent';
 import MovieDetails from '../MovieDetails/MovieDetailsComponent';
 import { TABS, DEFAULT_SORT_BY, DEFAULT_FILTER_BY } from '../../consts/constants';
 import { store, getMoviesAsync } from '../../store/store';
@@ -11,8 +12,7 @@ import './ContentHolder.css';
 const ContentHolderComponent = () => {
   const [genre, setGenre] = useState(DEFAULT_FILTER_BY);
   const [sortBy, setSortBy] = useState(DEFAULT_SORT_BY);
-  const [movieDetails, setMovieDetails] = useState(null);
-  const [query, setQuery] = useState('');
+  const { id, query } = useParams();
 
   const onTabChange = index => {
     setGenre(TABS[index]);
@@ -44,9 +44,9 @@ const ContentHolderComponent = () => {
     fetchMovies();
   }, [genre, sortBy, query]);
 
-  const componentToDisplay = movieDetails
-    ? <MovieDetails {...movieDetails} goToHome={setMovieDetails} />
-    : <HeaderComponent setQuery={setQuery} fetchMovies={fetchMovies} />;
+  const componentToDisplay = id
+    ? <MovieDetails id={id}/>
+    : <HeaderComponent  fetchMovies={fetchMovies} />;
 
   return (
     <>
@@ -63,7 +63,7 @@ const ContentHolderComponent = () => {
           </div>
         </div>
         <ErrorBoundary>
-          <MovieListComponent fetchMovies={fetchMovies} setMovieDetails={setMovieDetails} />
+          <MovieListComponent fetchMovies={fetchMovies}  />
         </ErrorBoundary>
       </div>
       <div className="footer-bar">
