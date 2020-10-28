@@ -58,9 +58,13 @@ export default class AddMovieComponent extends Component {
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
-            <div className="addmovie-header">{editMode
-              ? 'Edit Movie'
-              : 'Add Movie'}</div>
+            <div className="addmovie-header">
+              {
+                editMode
+                  ? 'Edit Movie'
+                  : 'Add Movie'
+              }
+            </div>
             {editMode && (
               <>
                 <label className="input-label">Movie Id</label>
@@ -180,9 +184,11 @@ export default class AddMovieComponent extends Component {
                 className="button-submit"
                 onClick={handleSubmit}
               >
-                {editMode
-                  ? 'SAVE'
-                  : 'SUBMIT'}
+                {
+                  editMode
+                    ? 'SAVE'
+                    : 'SUBMIT'
+                }
               </button>
             </div>
           </form>
