@@ -5,6 +5,7 @@ import DialogComponent from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
 import { MENU } from '../../consts/constants';
 import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
+import { concatStrings } from '../../utils';
 import './MovieCard.css';
 
 export default class MovieCardComponent extends PureComponent {
@@ -46,20 +47,21 @@ export default class MovieCardComponent extends PureComponent {
   };
 
   onDelete = () => {
-    this.props.deleteMovie(this.props.movie);
+    const {movie:{id}} = this.props;
+    this.props.deleteMovie({id});
     this.toggleDeleteDialog();
   };
 
   render() {
     const {
       movie,
-      movie: { title, releaseDate, category, src }
+      movie: { title, release_date, genres, poster_path }
     } = this.props;
 
     return (
       <>
       <div className="movie-card" onClick={() => this.props.setMovieDetails(movie)}>
-        <img src={src} alt={title}></img>
+        <img src={poster_path}  className="image-view" alt={title}></img>
         <div className="menu-icon" onClick={event => this.menuToggler(true, event)}>
           &#xFE19; {this.contextType}{' '}
         </div>
@@ -69,9 +71,9 @@ export default class MovieCardComponent extends PureComponent {
         <div className="card-footer">
           <div className="title-info">
             <div className="title">{title}</div>
-            <div className="year">{new Date(releaseDate).getFullYear()}</div>
+            <div className="year">{new Date(release_date).getFullYear()}</div>
           </div>
-          <div className="category">{category}</div>
+          <div className="category">{concatStrings(genres)}</div>
         </div>
       </div>
       {this.state.isOpenEditDialog && (
@@ -91,10 +93,10 @@ export default class MovieCardComponent extends PureComponent {
 
 MovieCardComponent.propTypes = {
   movie: PropTypes.shape({
-    src: PropTypes.string.isRequired,
+    poster_path: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
+    genres: PropTypes.array.isRequired,
     id: PropTypes.number.isRequired
   })
 };

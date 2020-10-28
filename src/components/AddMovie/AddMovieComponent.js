@@ -13,13 +13,24 @@ export default class AddMovieComponent extends Component {
     this.setState({
       movie: {
         ...this.state.movie,
-        [name]: value
+        [name]: name === 'runtime'
+          ? Number(value)
+          : value
+      }
+    });
+  };
+
+  handleChange = ({ target: { selectedOptions, name } }) => {
+    this.setState({
+      movie: {
+        ...this.state.movie,
+        [name]: Array.from(selectedOptions, item => item.value)
       }
     });
   };
 
   getInitialState = () => {
-    const movie = { ...DEFAULT_MOVIE, id: Math.random() };
+    const movie = { ...DEFAULT_MOVIE };
     const state = {
       movie: this.props.editMode
         ? this.props.movie
@@ -33,24 +44,24 @@ export default class AddMovieComponent extends Component {
   };
 
   isDataValid() {
-    const { title, releaseDate, movieURL, genre, overview, runtime } = this.state.movie;
+    const { title, release_date, poster_path, genres, overview, runtime } = this.state.movie;
     const errors = {};
     if (this.isEmptyField(title)) {
       errors.title = 'Title is required';
     }
-    if (this.isEmptyField(movieURL)) {
-      errors.movieURL = 'MovieURL is required';
+    if (this.isEmptyField(poster_path)) {
+      errors.poster_path = 'MovieURL is required';
     }
     if (this.isEmptyField(overview)) {
       errors.overview = 'Overview is required';
     }
-    if (this.isEmptyField(genre)) {
-      errors.genre = 'Genre is required';
+    if (!genres || genres.length === 0) {
+      errors.genres = 'Genre is required';
     }
-    if (!releaseDate) {
-      errors.releaseDate = 'Release Date is required';
-    } else if (new Date() < new Date(releaseDate)) {
-      errors.releaseDate = 'Release Date should not exceed current date';
+    if (!release_date) {
+      errors.release_date = 'Release Date is required';
+    } else if (new Date() < new Date(release_date)) {
+      errors.release_date = 'Release Date should not exceed current date';
     }
     if (!runtime) {
       errors.runtime = 'Runtime  is required';
@@ -67,20 +78,18 @@ export default class AddMovieComponent extends Component {
     const { editMode, onSubmit } = this.props;
     const {
       movie,
-      movie: { id, title, releaseDate, movieURL, genre, overview, runtime }
+      movie: { id, title, release_date, poster_path, genres, overview, runtime }
     } = this.state;
     const errors = this.isDataValid();
     const isSubmitDisabled = Object.keys(errors).length > 0;
 
     return (
       <>
-        <div className="addmovie-header">
-          {
-            editMode
-              ? 'Edit Movie'
-              : 'Add Movie'
-          }
-        </div>
+       <div className="addmovie-header">
+        {editMode
+          ? 'Edit Movie'
+          : 'Add Movie'
+        }</div>
         {editMode && (
           <>
             <label className="input-label">Movie Id</label>
@@ -103,7 +112,7 @@ export default class AddMovieComponent extends Component {
           {errors.title && <div className="showErrors">{errors.title}</div>}
         </div>
         <div>
-          <label className="input-label" htmlFor="releaseDate">
+          <label className="input-label" htmlFor="release_date">
             Release Date
           </label>
           <input
@@ -111,14 +120,14 @@ export default class AddMovieComponent extends Component {
             onChange={this.onValueChange}
             placeholder="Select Date"
             type="date"
-            id="releaseDate"
-            value={releaseDate}
-            name="releaseDate"
+            id="release_date"
+            value={release_date}
+            name="release_date"
           />
-          {errors.releaseDate && <div className="showErrors">{errors.releaseDate}</div>}
+          {errors.release_date && <div className="showErrors">{errors.release_date}</div>}
         </div>
         <div>
-          <label className="input-label" htmlFor="movieURL">
+          <label className="input-label" htmlFor="poster_path">
             Movie URL
           </label>
           <input
@@ -126,23 +135,23 @@ export default class AddMovieComponent extends Component {
             onChange={this.onValueChange}
             placeholder="Movie URL here"
             type="text"
-            value={movieURL}
-            name="movieURL"
-            id="movieURL"
+            value={poster_path}
+            name="poster_path"
+            id="poster_path"
           />
-          {errors.movieURL && <div className="showErrors">{errors.movieURL}</div>}
+          {errors.poster_path && <div className="showErrors">{errors.poster_path}</div>}
         </div>
         <div>
-          <label className="input-label" htmlFor="genre">
+          <label className="input-label" htmlFor="genres">
             Genre
           </label>
           <select
             className="input-field"
-            onChange={this.onValueChange}
-            type="text"
-            value={genre}
-            id="genre"
-            name="genre"
+            onChange={this.handleChange}
+            value={genres}
+            multiple
+            id="genres"
+            name="genres"
           >
             <option value="">Select Genre</option>
             {GENRE.map((item, index) => {
@@ -153,7 +162,7 @@ export default class AddMovieComponent extends Component {
               );
             })}
           </select>
-          {errors.genre && <div className="showErrors">{errors.genre}</div>}
+          {errors.genres && <div className="showErrors">{errors.genres}</div>}
         </div>
         <div>
           <label className="input-label" htmlFor="overview">
