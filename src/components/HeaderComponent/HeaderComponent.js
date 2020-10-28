@@ -26,7 +26,10 @@ import './HeaderComponent.css';
   onSearch = () => {
     const trimmedQuery = this.searchValue.current.value.trim();
     const {history} = this.props;
-    history.push(`/search/${trimmedQuery}`);
+    const path =  trimmedQuery
+      ? `/search/${trimmedQuery}`
+      : '/home';
+    history.push(path);
   };
 
   render() {

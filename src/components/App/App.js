@@ -16,7 +16,7 @@ const App = () => {
             <Route exact path="/film/:id" ><ContentHolderComponent/></Route>
             <Route exact path="/search/:query" ><ContentHolderComponent/></Route>
             <Redirect exact from="/" to="/home" />
-            <Route ><PageNotFound/></Route>
+            <Route><PageNotFound/></Route>
           </Switch>
           </Router>
         </Provider>
