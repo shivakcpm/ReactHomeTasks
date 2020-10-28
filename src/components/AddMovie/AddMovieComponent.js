@@ -87,8 +87,8 @@ export default class AddMovieComponent extends Component {
       <>
        <div className="addmovie-header">
         {editMode
-            ? 'Edit Movie'
-            : 'Add Movie'
+          ? 'Edit Movie'
+          : 'Add Movie'
         }</div>
         {editMode && (
           <>
@@ -205,9 +205,11 @@ export default class AddMovieComponent extends Component {
               onSubmit(movie);
             }}
           >
-            {editMode
-              ? 'SAVE'
-              : 'SUBMIT'}
+            {
+              editMode
+                ? 'SAVE'
+                : 'SUBMIT'
+            }
           </button>
         </div>
       </>
