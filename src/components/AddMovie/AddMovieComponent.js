@@ -40,17 +40,21 @@ export default class AddMovieComponent extends Component {
     const { editMode, onSubmit } = this.props;
     const movie = this.props.movie || DEFAULT_MOVIE;
 
+    const  validator = (values) => {
+      return this.isDataValid(values);
+    };
+
+    const submitHandler = (values, { setSubmitting }) => {
+      values.runtime = Number(values.runtime);
+      onSubmit(values);
+      setSubmitting(false);
+    };
+
     return (
       <Formik
         initialValues={movie}
-        validate={values => {
-          return this.isDataValid(values);
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          values.runtime = Number(values.runtime);
-          onSubmit(values);
-          setSubmitting(false);
-        }}
+        validate={validator}
+        onSubmit={submitHandler}
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
