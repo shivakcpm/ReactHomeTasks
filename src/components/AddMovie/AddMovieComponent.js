@@ -6,6 +6,7 @@ import { store, addMovieAsync, editMovieAsync } from '../../store/store';
 import './AddMovie.css';
 
 export default class AddMovieComponent extends Component {
+
   isDataValid(values) {
     const { title, release_date, poster_path, genres, overview, runtime } = values;
     const errors = {};
@@ -45,6 +46,7 @@ export default class AddMovieComponent extends Component {
       : 'Add Movie';
 
     const  validator = (values) => {
+      console.log('validator got called',this.isDataValid(values));
       return this.isDataValid(values);
     };
 
