@@ -46,7 +46,6 @@ export default class AddMovieComponent extends Component {
       : 'Add Movie';
 
     const  validator = (values) => {
-      console.log('validator got called',this.isDataValid(values));
       return this.isDataValid(values);
     };
 
