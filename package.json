@@ -61,7 +61,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --coverage --testResultsProcessor=./node_modules/jest-html-reporter",
+    "test": "jest",
+    "test:coverage": "jest --coverage --testResultsProcessor=./node_modules/jest-html-reporter",
     "eject": "react-scripts eject",
     "webpack": "webpack",
     "webpack-dev-server": "webpack-dev-server",
