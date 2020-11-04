@@ -1,0 +1,33 @@
+.header-bar {
+  color: #f65261;
+  padding: 20px 40px;
+  font-size: 20px;
+}
+
+.container {
+  background: #232323;
+  height: 100vh;
+}
+
+.page-info {
+  color: #fff;
+  font-size: 28px;
+}
+
+.page-body {
+  height: calc(100vh - 120px);
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+}
+
+.go-back {
+  background: #232323;
+  border: 1px solid #f65261;
+  padding: 20px 30px;
+  font-weight: bold;
+  color: #f65261;
+  font-size: 18px;
+  text-transform: uppercase;
+}

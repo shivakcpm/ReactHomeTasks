@@ -32,6 +32,11 @@ export function deleteMovie(pathParams) {
   });
 }
 
+export function getMovie(pathParams) {
+  const url = URLS.getUrl(URLS.MOVIE_BY_ID, pathParams, null);
+  return fetch(url);
+}
+
 function stringifyValue(payload) {
     return JSON.stringify(payload);
 }

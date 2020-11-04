@@ -1,10 +1,12 @@
 import React, { createRef, PureComponent } from 'react';
+import { withRouter } from 'react-router-dom';
 import DialogComponent  from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
-import { store, addMovieAsync } from '../../store/store';
+import HeaderBarComponent from '../HeaderBarComponent/HeaderBarComponent';
 import './HeaderComponent.css';
 
-export class HeaderComponent extends PureComponent {
+
+ export class HeaderComponent extends PureComponent {
   constructor(props) {
     super(props);
     this.searchValue = createRef();
@@ -15,15 +17,18 @@ export class HeaderComponent extends PureComponent {
     this.setState({ isOpen: !this.state.isOpen });
   };
 
-  addMovie = movie => {
+  addMovie =  movie => {
     this.toggleModel();
-    store.dispatch(addMovieAsync(movie));
     this.props.fetchMovies();
   };
 
   onSearch = () => {
     const trimmedQuery = this.searchValue.current.value.trim();
-    this.props.setQuery(trimmedQuery);
+    const {history} = this.props;
+    const path =  trimmedQuery
+      ? `/search/${trimmedQuery}`
+      : '/home';
+    history.push(path);
   };
 
   render() {
@@ -32,10 +37,7 @@ export class HeaderComponent extends PureComponent {
         <div className="image-holder"></div>
         <div className="content-holder">
           <div className="top-bar">
-            <div>
-              <strong>netflix</strong>
-              <span>roulette</span>
-            </div>
+            <HeaderBarComponent/>
             <button className="add-movie" onClick={this.toggleModel}>
               {' '}
               + ADD MOVIE
@@ -59,3 +61,4 @@ export class HeaderComponent extends PureComponent {
   }
 }
 
+export default withRouter(HeaderComponent);

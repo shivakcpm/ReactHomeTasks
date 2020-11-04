@@ -21,7 +21,7 @@ export class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="error-boundary">
+        <div className="info-message">
           <h1>No Movie Found</h1>
         </div>
       );

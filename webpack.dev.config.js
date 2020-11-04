@@ -43,6 +43,7 @@ module.exports = {
     devServer: {
         open: true,
         hot: true,
+        historyApiFallback:true,
         contentBase:path.resolve(__dirname, 'public')
     }
 };

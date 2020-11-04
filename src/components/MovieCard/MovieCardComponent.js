@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ContextMenu from '../ContextMenu/ContextMenuComponent';
 import DialogComponent from '../DialogComonent/DialogComponent';
@@ -8,7 +9,7 @@ import DeleteMovieComponent from '../DeleteMovie/DeleteMovie';
 import { concatStrings } from '../../utils';
 import './MovieCard.css';
 
-export default class MovieCardComponent extends PureComponent {
+export  class MovieCardComponent extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,13 +55,14 @@ export default class MovieCardComponent extends PureComponent {
 
   render() {
     const {
+      history,
       movie,
-      movie: { title, release_date, genres, poster_path }
+      movie: {id, title, release_date, genres, poster_path }
     } = this.props;
 
     return (
       <>
-      <div className="movie-card" onClick={() => this.props.setMovieDetails(movie)}>
+      <div className="movie-card" onClick={() => history.push(`/film/${id}`)}>
         <img src={poster_path}  className="image-view" alt={title}></img>
         <div className="menu-icon" onClick={event => this.menuToggler(true, event)}>
           &#xFE19; {this.contextType}{' '}
@@ -100,3 +102,5 @@ MovieCardComponent.propTypes = {
     id: PropTypes.number.isRequired
   })
 };
+
+export default withRouter(MovieCardComponent);
