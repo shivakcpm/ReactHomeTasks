@@ -12,11 +12,11 @@ const App = () => {
         <Provider store={store}>
           <Router>
           <Switch>
-            <Route exact path="/home" ><ContentHolderComponent/></Route>
-            <Route exact path="/film/:id" ><ContentHolderComponent/></Route>
-            <Route exact path="/search/:query" ><ContentHolderComponent/></Route>
+            <Route exact path="/home" component={ContentHolderComponent}  />
+            <Route exact path="/film/:id" component={ContentHolderComponent}  />
+            <Route exact path="/search/:query" component={ContentHolderComponent} />
             <Redirect exact from="/" to="/home" />
-            <Route><PageNotFound/></Route>
+            <Route path='*' component={PageNotFound}/>
           </Switch>
           </Router>
         </Provider>

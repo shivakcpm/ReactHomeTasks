@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { concatStrings } from '../../utils';
 import { getMovie } from '../../services/movieServices';
 import { useHistory } from 'react-router-dom';
+import HeaderBarComponent from '../HeaderBarComponent/HeaderBarComponent';
 import './MovieDetails.css';
 
 const MovieDetails = props => {
@@ -22,10 +23,7 @@ const MovieDetails = props => {
       <div className="image-holder"></div>
       <div className="content-holder">
         <div className="top-bar">
-          <div>
-            <strong>netflix</strong>
-            <span>roulette</span>
-          </div>
+          <HeaderBarComponent/>
           <img src="/public/searchIcon.PNG" onClick={() => history.push('/home')} />
         </div>
         {movie &&

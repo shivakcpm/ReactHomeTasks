@@ -2,7 +2,7 @@ import React, { createRef, PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import DialogComponent  from '../DialogComonent/DialogComponent';
 import AddMovieComponent from '../AddMovie/AddMovieComponent';
-import { store, addMovieAsync } from '../../store/store';
+import HeaderBarComponent from '../HeaderBarComponent/HeaderBarComponent';
 import './HeaderComponent.css';
 
 
@@ -17,9 +17,8 @@ import './HeaderComponent.css';
     this.setState({ isOpen: !this.state.isOpen });
   };
 
-  addMovie = movie => {
+  addMovie =  movie => {
     this.toggleModel();
-    store.dispatch(addMovieAsync(movie));
     this.props.fetchMovies();
   };
 
@@ -38,10 +37,7 @@ import './HeaderComponent.css';
         <div className="image-holder"></div>
         <div className="content-holder">
           <div className="top-bar">
-            <div>
-              <strong>netflix</strong>
-              <span>roulette</span>
-            </div>
+            <HeaderBarComponent/>
             <button className="add-movie" onClick={this.toggleModel}>
               {' '}
               + ADD MOVIE

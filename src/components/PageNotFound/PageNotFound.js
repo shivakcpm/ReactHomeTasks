@@ -1,17 +1,15 @@
 import React from 'react';
-import './pageNotFound.css';
 import { useHistory } from 'react-router-dom';
+import HeaderBarComponent from '../HeaderBarComponent/HeaderBarComponent';
+import './pageNotFound.css';
 
 const PageNotFound = () => {
   const history = useHistory();
   return (
     <div className="container">
-      <div className="header-bar">
-        <strong>netflix</strong>
-        <span>roulette</span>
-      </div>
+      <HeaderBarComponent/>
       <div className="page-body">
-        <div class="page-info">Page Not Found</div>
+        <div className="page-info">Page Not Found</div>
         <img src="/public/404.PNG"></img>
         <button
           className="go-back"

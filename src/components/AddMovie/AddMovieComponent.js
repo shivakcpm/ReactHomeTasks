@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Formik } from 'formik';
 import { GENRE } from '../../consts/constants';
 import { DEFAULT_MOVIE } from '../../consts/movie';
+import { store, addMovieAsync, editMovieAsync } from '../../store/store';
 import './AddMovie.css';
 
 export default class AddMovieComponent extends Component {
@@ -39,15 +40,23 @@ export default class AddMovieComponent extends Component {
   render() {
     const { editMode, onSubmit } = this.props;
     const movie = this.props.movie || DEFAULT_MOVIE;
+    const movieHeader = editMode
+      ? 'Edit Movie'
+      : 'Add Movie';
 
     const  validator = (values) => {
       return this.isDataValid(values);
     };
 
-    const submitHandler = (values, { setSubmitting }) => {
+    const submitHandler = async (values, { setSubmitting }) => {
       values.runtime = Number(values.runtime);
-      onSubmit(values);
+      if (!editMode) {
+        await store.dispatch(addMovieAsync(movie));
+      } else {
+        await store.dispatch(editMovieAsync(movie));
+      }
       setSubmitting(false);
+      onSubmit(values);
     };
 
     return (
@@ -59,11 +68,7 @@ export default class AddMovieComponent extends Component {
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
             <div className="addmovie-header">
-              {
-                editMode
-                  ? 'Edit Movie'
-                  : 'Add Movie'
-              }
+              {movieHeader}
             </div>
             {editMode && (
               <>
