@@ -1,16 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import ContentHolderComponent from '../ContentHolder/ContentHolderComponent';
-import { store } from '../../store/store';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
-const App = () => {
+const App = ({store}) => {
   return (
     <React.StrictMode>
       <div className="container">
         <Provider store={store}>
-          <Router>
           <Switch>
             <Route exact path="/home" component={ContentHolderComponent}  />
             <Route exact path="/film/:id" component={ContentHolderComponent}  />
@@ -18,7 +16,6 @@ const App = () => {
             <Redirect exact from="/" to="/home" />
             <Route path='*' component={PageNotFound}/>
           </Switch>
-          </Router>
         </Provider>
       </div>
     </React.StrictMode>

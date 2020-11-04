@@ -41,7 +41,7 @@ const ContentHolderComponent = () => {
   };
 
   useEffect(() => {
-    fetchMovies();
+     fetchMovies();
   }, [genre, sortBy, query]);
 
   const componentToDisplay = id
