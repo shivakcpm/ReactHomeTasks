@@ -21,8 +21,8 @@ const fillField = (field, name, value) => {
         persist: () => { },
         target: {
             name,
-            value,
-        },
+            value
+        }
     });
 };
 
@@ -34,16 +34,15 @@ describe('AddMovieComponent', () => {
     const onSubmit = jest.fn();
     beforeEach(() => {
         component = mount(<AddMovieComponent onSubmit={onSubmit}></AddMovieComponent>);
-    })
+    });
 
     test('Should render Add Movie Component', async () => {
-        let buttonSubmit = component.find('.button-submit');
+        const buttonSubmit = component.find('.button-submit');
         expect(component.find('form').exists()).toBeTruthy();
         expect(buttonSubmit).toBeTruthy();
     });
 
     test('Should update the values', async () => {
-
         fillField(component.find({ name: 'title' }), 'title', 'movie');
         fillField(component.find({ name: 'release_date' }), 'release_date', '12/12/2019');
         fillField(component.find({ name: 'poster_path' }), 'poster_path', 'movie');
@@ -53,5 +52,5 @@ describe('AddMovieComponent', () => {
         component.find('.button-submit').simulate('click');
         await actImmediate(component);
         expect(onSubmit).toHaveBeenCalled();
-    })
-})
+    });
+});
