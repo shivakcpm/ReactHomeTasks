@@ -4,33 +4,42 @@ import * as services from '../services/movieServices';
 import rootReducer from './rootReducer';
 import * as actions from '../store/actions';
 
+const preloadedState = typeof window !== 'undefined'
+    ? window.PRELOADED_STATE
+    : null;
+
+// Allow the passed state to be garbage-collected
+if (preloadedState) {
+    delete window.PRELOADED_STATE;
+}
+
 export function getMoviesAsync(queryParams) {
     return async (dispatch) => {
         const response = await services.getMovies(queryParams);
-        return dispatch(actions.getMoviesAction({moviesData:response}));
+        return dispatch(actions.getMoviesAction({ moviesData: response }));
     };
 }
 
 export function deleteMovieAsync(pathParams) {
     return async (dispatch) => {
         const response = await services.deleteMovie(pathParams);
-        return dispatch(actions.deleteMovieAction({moviesData:response}));
+        return dispatch(actions.deleteMovieAction({ moviesData: response }));
     };
 }
 
 export function editMovieAsync(payload) {
     return async (dispatch) => {
-        const response =  services.editMovie(payload);
-        return dispatch(actions.editMovieAction({moviesData:response}));
+        const response = services.editMovie(payload);
+        return dispatch(actions.editMovieAction({ moviesData: response }));
     };
 }
 
 export function addMovieAsync(payload) {
     return async (dispatch) => {
-        const response =  services.addMovie(payload);
-        return dispatch(actions.addMovieAction({moviesData:response}));
+        const response = services.addMovie(payload);
+        return dispatch(actions.addMovieAction({ moviesData: response }));
     };
 }
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 
