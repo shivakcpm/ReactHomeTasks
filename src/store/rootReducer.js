@@ -1,7 +1,7 @@
 import * as actions from './actions';
 
-const initialState = {
-    moviesData:{}
+export const initialState = {
+    moviesData:{data:[]}
 };
 
 const rootReducer = (state = initialState, action) => {
